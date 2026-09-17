@@ -170,6 +170,11 @@ def test_result_claiming_an_untested_revision_fails_the_attempt(root):
     state = root.repo / "state"
     r = runner.run(root, path, adapter("emit('complete', tested={'head': '0'*40, 'dirty': False})"), state=state)
     assert r["outcome"] == "failed" and "000000000000" in r["reason"] and c["checkout"]["head"][:12] in r["reason"]
+    # An unrelated real commit is refused too: ancestry, not mere existence.
+    unrelated = adapter("import subprocess; r=c['checkout']['repo']; g=lambda *a: subprocess.run(['git','-C',r,*a],check=True,capture_output=True,text=True).stdout.strip(); "
+                        "h=g('-c','user.name=t','-c','user.email=t@x','commit-tree',g('write-tree'),'-m','stray'); emit('complete', tested={'head': h, 'dirty': False})")
+    r = runner.run(root, path, unrelated, state=root.repo / "state2")
+    assert r["outcome"] == "failed" and "does not descend" in r["reason"]
 
 
 def test_wait_sources_must_stay_inside_the_repository(root):
@@ -180,3 +185,16 @@ def test_wait_sources_must_stay_inside_the_repository(root):
         with pytest.raises(GroveError, match="repo-relative"):
             contract.validate_result(c, {"schema": 1, "contract": c["id"], "work": c["order"], "outcome": "waiting", "tested": {"head": "abc"},
                                          "evidence": [], "findings": [], "next": "Wait.", "wait": {"on": "human", "sources": [bad]}})
+
+
+def test_result_tested_on_a_branch_descending_from_the_exported_head_is_accepted(root):
+    """W-004: the adapter commits on a worktree branch and leaves the launched checkout alone."""
+    c, path = setup(root)
+    state = root.repo / "state"
+    branching = adapter("import subprocess; r=c['checkout']['repo']; g=lambda *a: subprocess.run(['git','-C',r,*a],check=True,capture_output=True,text=True).stdout.strip(); "
+                        "g('worktree','add','-q','wt','-b','W-101'); open(r+'/wt/new.txt','w').write('x'); "
+                        "g('-C','wt','add','-A'); g('-C','wt','-c','user.name=t','-c','user.email=t@x','commit','-q','-m','work'); "
+                        "emit('complete', tested={'head': g('-C','wt','rev-parse','HEAD'), 'dirty': False})")
+    r = runner.run(root, path, branching, state=state)
+    assert r["outcome"] == "complete", r["reason"]
+    assert contract.checkout(root.repo)["head"] == c["checkout"]["head"]   # launched checkout untouched

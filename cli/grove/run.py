@@ -164,9 +164,10 @@ def run(root, contract_path, adapter, state=None, max_attempts=3, timeout=None):
                 except (ValueError, GroveError) as exc:
                     a.update(outcome="failed", reason=f"invalid result: {exc}")
                 else:
-                    head = checkout(root.repo)["head"]
-                    if result["tested"]["head"] != head:
-                        a.update(outcome="failed", reason=f"result claims tested revision {result['tested']['head'][:12]} but the checkout is {head[:12]}")
+                    # The adapter may commit on a worktree branch; the tested revision must exist and descend from the exported head.
+                    base, tested = c["checkout"]["head"], result["tested"]["head"]
+                    if subprocess.run(["git", "-C", str(root.repo), "merge-base", "--is-ancestor", base, tested], capture_output=True).returncode:
+                        a.update(outcome="failed", reason=f"result claims tested revision {tested[:12]} which does not descend from the exported head {base[:12]}")
                 if a["outcome"] is None:
                     a.update(outcome=result["outcome"], reason=result["next"])
                     if result["outcome"] == "waiting":

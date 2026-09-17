@@ -1,7 +1,8 @@
 ---
 type: work
 id: W-004
-status: proposed
+status: active
+started: 2026-09-17
 created: 2026-09-15
 updated: 2026-09-17
 kind: spike
@@ -28,4 +29,4 @@ One isolated fixture project with one small exported work unit. The adapter is a
 ## Evidence
 
 ## Next
-Start at plan step 1 in a worktree branch; the ancestry check is settled and does not need discussion.
+Plan step 1 in progress on branch worktree-W-004: ancestry check and its test.
