@@ -27,6 +27,9 @@ One isolated fixture project with one small exported work unit. The adapter is a
 ## Disposition
 
 ## Evidence
+- 2026-09-17 step 1 at 591de29: `grove run` now accepts a tested revision that descends from the exported head and refuses an unrelated commit; `uv run --extra dev pytest -q tests/` in cli: 118 passed.
+- 2026-09-17 step 2: `scripts/adapters/claude-p.sh` written; `scripts/adapters/make-fixture.sh` builds the fixture (W-001 mechanical, W-002 needs a human word). Headless `claude -p --plugin-dir <this repo>` lists all six `grove:*` skills (probe on haiku, max-turns 1).
+- 2026-09-17 step 4 not started: the session's permission classifier refused to launch `claude -p --dangerously-skip-permissions` from the adapter, so the runs need a human to start them.
 
 ## Next
-Plan step 1 in progress on branch worktree-W-004: ancestry check and its test.
+Human runs the interruption case: build the fixture with `scripts/adapters/make-fixture.sh DIR`, `grove export W-001 --out c1.json` there, then from DIR `GROVE_TEST_CMD=./test.sh GROVE_PLUGIN_DIR=<this repo> uv run --project <this repo>/cli grove run c1.json --state STATE -- <this repo>/scripts/adapters/claude-p.sh`; once `.worktrees/W-001/hello.sh` appears, `kill -9` the driver and the adapter's process group (pid in STATE/ledger.json), re-run the same command, and record whether attempt 2 resumes on the existing branch. Then human-wait with W-002, duplicate wake, success, and write Disposition.
