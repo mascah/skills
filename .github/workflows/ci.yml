@@ -9,6 +9,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: astral-sh/setup-uv@v6
-      - run: uv run --project cli pytest -q cli/tests
+      - run: uv run --project cli --extra dev pytest -q cli/tests
       - run: uv run --project cli grove lint
       - run: python3 __init__.py
