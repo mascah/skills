@@ -1,0 +1,16 @@
+{
+  "$schema": "https://raw.githubusercontent.com/googleapis/release-please/main/schemas/config.json",
+  "release-type": "simple",
+  "include-component-in-tag": false,
+  "packages": {
+    ".": {
+      "extra-files": [
+        { "type": "toml", "path": "cli/pyproject.toml", "jsonpath": "$.project.version" },
+        { "type": "json", "path": ".claude-plugin/plugin.json", "jsonpath": "$.version" },
+        { "type": "json", "path": ".codex-plugin/plugin.json", "jsonpath": "$.version" },
+        { "type": "yaml", "path": "plugin.yaml", "jsonpath": "$.version" },
+        "cli/grove/__init__.py"
+      ]
+    }
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "name": "mascah",
+  "owner": {
+    "name": "Mike Ascah",
+    "url": "https://github.com/mascah"
+  },
+  "description": "Mike Ascah's plugins for coding agents.",
+  "plugins": [
+    {
+      "name": "grove",
+      "source": "./",
+      "description": "Repo-local project knowledge for coding agents: shape work, get scoped context, implement, close, curate.",
+      "category": "engineering",
+      "keywords": ["knowledge", "planning", "workflow", "skills"]
+    }
+  ]
+}

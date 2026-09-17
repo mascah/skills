@@ -1,0 +1,25 @@
+{
+  "name": "grove",
+  "version": "0.2.0",
+  "description": "Repo-local project knowledge for coding agents: shape work, get scoped context, implement, close, curate.",
+  "author": {
+    "name": "Mike Ascah"
+  },
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Grove",
+    "shortDescription": "Repo-local project knowledge for coding agents",
+    "developerName": "Mike Ascah",
+    "category": "Developer Tools",
+    "longDescription": "Maintain repo-local project knowledge, select and combine work, prepare implementation plans, and reconcile verified results.",
+    "defaultPrompt": [
+      "Use Grove to identify the next useful work and prepare an implementation within the project outcomes and constraints."
+    ],
+    "capabilities": [
+      "Interactive",
+      "Write"
+    ]
+  },
+  "license": "MIT",
+  "repository": "https://github.com/mascah/skills"
+}

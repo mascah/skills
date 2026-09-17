@@ -1,0 +1,9 @@
+pre-commit:
+  parallel: true
+  commands:
+    tests:
+      run: uv run --project cli pytest -q cli/tests
+    lint:
+      run: uv run --project cli grove lint
+    hermes:
+      run: python3 __init__.py

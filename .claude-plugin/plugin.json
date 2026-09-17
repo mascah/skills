@@ -1,0 +1,13 @@
+{
+  "name": "grove",
+  "version": "0.2.0",
+  "description": "Repo-local project knowledge for coding agents: shape work, get scoped context, implement, close, curate.",
+  "author": {
+    "name": "Mike Ascah",
+    "url": "https://github.com/mascah"
+  },
+  "homepage": "https://github.com/mascah/skills",
+  "repository": "https://github.com/mascah/skills",
+  "license": "MIT",
+  "keywords": ["knowledge", "planning", "workflow", "skills"]
+}
