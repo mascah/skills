@@ -1,8 +1,9 @@
 ---
 type: work
 id: W-009
-status: proposed
+status: done
 created: 2026-09-18
+started: 2026-09-18
 updated: 2026-09-18
 kind: tooling
 size: small
@@ -25,12 +26,18 @@ Put the rule in the two places every committing session already loads: the manag
 Rejected: work ID as the scope (`feat(W-004): ...`). Scope names a code area and release-please groups the changelog by it; a work ID there is noise for readers of the changelog. Reconsider if a repo needs per-work changelog grouping.
 
 ## Acceptance
-- [ ] `cli/grove/init.py` BLOCK has one line stating the conventional subject rule and the `Refs: W-NNN` footer; `grove init` rerun on this repo updates CLAUDE.md and AGENTS.md.
-- [ ] `references/discipline.md` states the same rule once, in the workspace section, including the `docs: close W-NNN` form.
-- [ ] `scripts/adapters/claude-p.sh` headless prompt says commits must be conventional.
-- [ ] `cli/tests/test_init.py` asserts the block mentions the rule; suite and `grove lint` pass; the change is delivered on a branch whose own commits are conventional.
+- [x] `cli/grove/init.py` BLOCK has one line stating the conventional subject rule and the `Refs: W-NNN` footer; `grove init` rerun on this repo updates CLAUDE.md and AGENTS.md.
+- [x] `references/discipline.md` states the same rule once, in the workspace section, including the `docs: close W-NNN` form.
+- [x] `scripts/adapters/claude-p.sh` headless prompt says commits must be conventional.
+- [x] `cli/tests/test_init.py` asserts the block mentions the rule; suite and `grove lint` pass; the change is delivered on a branch whose own commits are conventional.
 
 ## Evidence
+Branch `worktree-W-009` from `edab734`. Single agent, in-session (small work); no delegation.
+- `cli/grove/init.py` BLOCK gained one line: Conventional Commits subject, `docs` for knowledge-only, `docs: close <id>` for the close, work ID in a `Refs: <id>` footer.
+- `grove init` rerun from this checkout (`PYTHONPATH=cli python3 -c "from grove.cli import main; main()" init`) printed `updated CLAUDE.md block` / `updated AGENTS.md block`; both files now carry the rule. The `grove` on PATH is an editable install of the main checkout, so it cannot exercise a worktree's code.
+- `references/discipline.md` workspace section states the rule once, including `docs: close W-NNN`; `scripts/adapters/claude-p.sh` headless prompt requires it.
+- `cli/tests/test_init.py` asserts the block mentions "Conventional Commits" and "Refs: <id>".
+- `uv run --extra dev --project cli pytest cli/tests -q`: 118 passed. `grove lint`: 0 errors, 0 warnings.
 
 ## Next
-Add the rule line to `init.py` BLOCK, rerun `grove init`, mirror it in discipline.md and the adapter prompt, extend the init test, run the suite.
+None; the rule is in place. Future Grove sessions in any initialized repo commit conventionally.

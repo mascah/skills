@@ -2,7 +2,7 @@
 type: capability
 id: autonomous-execution
 status: draft
-updated: 2026-09-17
+updated: 2026-09-18
 ---
 ## Behavior
 `grove export <ids>` turns a prepared selection into a versioned contract (schema 1): dependency order, checkout head and dirty paths, each unit's outcome, constraints, design, plan path and acceptance lines with per-line revisions, the bounds (brief constraints, accepted decisions applying to the scope, parent release contracts), and a sha256 for every page and plan it was built from. Its `id` is the hash of the canonical content, so an edited contract file is refused. Export refuses blocked or unprepared selections; it records readiness as fact and grants no permission.
@@ -13,7 +13,7 @@ A result document names the contract id, work ids, outcome (`complete`, `partial
 
 The tested revision in a result must descend from the exported checkout head (`git merge-base --is-ancestor`); the launched checkout itself may stay at that head, because the adapter works on a branch.
 
-`scripts/adapters/claude-p.sh` is the first real adapter (W-004). It creates or resumes the worktree `.worktrees/<ids>` on branch `<ids>` from the exported head, runs `claude -p` inside it with the grove plugin loaded (`GROVE_PLUGIN_DIR`, default this repository), `GROVE_MODEL` (default sonnet) and permissions bypassed, telling the agent it is headless: run `grove:work`, commit to the branch, write `result.json` in the attempt directory, and emit a `waiting` result instead of asking. Afterwards it overwrites the result's contract and work identity from the contract, fills the tested head from the branch, and appends the tail of `GROVE_TEST_CMD` output as evidence. It was exercised on one small fixture unit: interruption resumed on the existing branch, human-wait, duplicate wake, unchanged wait and success all produced their specified exit codes. Launching it needs a human shell or a scheduler; Claude Code's own permission classifier refuses to start a permission-bypassing session from inside another session.
+`scripts/adapters/claude-p.sh` is the first real adapter (W-004). It creates or resumes the worktree `.worktrees/<ids>` on branch `<ids>` from the exported head, runs `claude -p` inside it with the grove plugin loaded (`GROVE_PLUGIN_DIR`, default this repository), `GROVE_MODEL` (default sonnet) and permissions bypassed, telling the agent it is headless: run `grove:work`, commit to the branch with a Conventional Commits subject and a `Refs:` footer, write `result.json` in the attempt directory, and emit a `waiting` result instead of asking. Afterwards it overwrites the result's contract and work identity from the contract, fills the tested head from the branch, and appends the tail of `GROVE_TEST_CMD` output as evidence. It was exercised on one small fixture unit: interruption resumed on the existing branch, human-wait, duplicate wake, unchanged wait and success all produced their specified exit codes. Launching it needs a human shell or a scheduler; Claude Code's own permission classifier refuses to start a permission-bypassing session from inside another session.
 
 The suite does not schedule work; scheduling belongs to whatever re-invokes `grove run`. Harness registration makes skills discoverable; it does not establish runtime compatibility. A branch-side `grove close` and a checkout-side `grove reconcile` both edit the same work page, so the human's merge conflicts there.
 

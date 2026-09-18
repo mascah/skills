@@ -7,4 +7,5 @@ Project knowledge lives in `docs/grove/`. Do not read that tree directly; use th
 - After writing any knowledge page run `grove lint`.
 - Implement in a git worktree on its own branch, never on main; the close handoff tells the human how to merge.
 - Finish implementation with the `grove:close` skill, which ends in `grove close <id>`.
+- Give every commit a Conventional Commits subject (`type(scope): summary`, `docs` for knowledge-only changes, `docs: close <id>` for the close) and put the work ID in a `Refs: <id>` footer, never in the subject.
 <!-- grove:end -->
