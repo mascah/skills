@@ -21,6 +21,8 @@ The user agreed to shape the highest-priority opportunities: single result deliv
 
 ## Interpretation and limits
 
+Shaping correction, 2026-09-18: the user objected to calling the general mechanism "release checkpoints" because work-skill runs need not be releases. W-011 covers work-run checkpoints for standalone units, batches and releases; umbrella/member bookkeeping is conditional on a release being in scope. The observed nullsec release remains an example, not a universal requirement.
+
 The controller carried useful work across compactions. The clearest observed coordination problems were multiple result-delivery paths, delayed idle messages and workers finishing a turn without collecting command results. These observations do not prove compaction caused state drift, that every idle event was unnecessary, or that a prose rule guarantees harness behavior. A small runtime trial must verify dispatch type and recovery before claiming the fixes work.
 
 Official harness reference inspected during analysis: [Agent teams](https://code.claude.com/docs/en/agent-teams), especially named dispatch conversion and automatic delivery of final answers in idle notifications. Verify current tool behavior when implementing; do not copy a stale teammate-only resume API into an ordinary-subagent workflow.
