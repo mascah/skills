@@ -18,7 +18,7 @@ grep -qx '.worktrees' "$exclude" 2>/dev/null || echo '.worktrees' >> "$exclude"
 if [ ! -d "$wt" ]; then
   if git show-ref --quiet "refs/heads/$ids"; then git worktree add "$wt" "$ids"; else git worktree add "$wt" -b "$ids" "$head"; fi
 fi
-prompt="You are running headless under \`grove run\`; no human can answer questions. Your working directory is already the implementation worktree for $ids on branch $ids: do not create or enter another worktree. Run /grove:work $ids and commit everything to this branch.
+prompt="You are running headless under \`grove run\`; no human can answer questions. Your working directory is already the implementation worktree for $ids on branch $ids: do not create or enter another worktree. Run /grove:work $ids and commit everything to this branch. Every commit needs a Conventional Commits subject (\`type(scope): summary\`) with a \`Refs: <work id>\` footer.
 When finished, write $attempt/result.json in the grove result shape: {\"schema\":1, \"contract\":\"$cid\", \"work\":$work,\"outcome\": complete|partial|waiting|blocked|failed, \"tested\":{\"head\":<commit sha you tested>, \"dirty\":false}, \"evidence\":[...], \"findings\":[...], \"next\":\"...\"}.
 If you need a human decision or preference, do not guess and do not ask: write a waiting result with \"wait\":{\"on\":\"<what you need>\", \"sources\":[<repo-relative paths that would change when it is answered>]} and stop. If the work already has partial progress on this branch, continue from it instead of starting over."
 ( cd "$wt" && claude -p "$prompt" --model "$model" --plugin-dir "$plugin" --dangerously-skip-permissions --output-format text ) > "$attempt/claude.txt" 2>&1 || echo "claude exited $?" >> "$attempt/claude.txt"
