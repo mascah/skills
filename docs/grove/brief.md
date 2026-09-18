@@ -2,8 +2,8 @@
 type: brief
 id: brief
 status: active
-updated: 2026-09-17
-focus: W-004
+updated: 2026-09-18
+focus: W-009
 ---
 ## Pitch
 A repo-local skill suite and CLI that let people choose software outcomes while agents research, plan, implement, and maintain the knowledge needed to continue.
