@@ -2,7 +2,7 @@
 type: decision
 id: D-0002
 status: accepted
-updated: 2026-09-17
+updated: 2026-09-18
 applies_to: [work-planning, autonomous-execution]
 sources:
   - https://code.claude.com/docs/en/sub-agents.md
@@ -15,13 +15,17 @@ sources:
 ## Decision
 `grove:work` stays one command with no default human checkpoint between plan and execution. The calling session is a controller: it prepares the plan on whatever model it runs, then for bounded and large work dispatches a fresh implementer per task and a fresh reviewer per task, each with an explicit model, runs a bounded fix loop with model escalation, and closes. The lead never writes code or runs a test-fix loop; diffs and review packages stay in files. Small work stays single agent in-session. Model rules live as prose in the skill and are passed on every dispatch; no frontmatter, no configuration. Each task report uses the contract result shape so a later harness can replace the dispatch call without changing the records.
 
+## Overnight controller follow-up
+On 2026-09-18 the user selected ordinary subagents and instructions that avoid teammates for the controller loop, leaving the agent-teams flag unchanged. Use file-backed reports with compact, attempt-identified returns, consume each result once, and make workers collect command results or explicitly hand off owned waits. Keep a compact release checkpoint and require final review to cover connected interactions. These are accepted directions for W-010 through W-012, not claims about implemented behavior. Evidence: [nullsec overnight analysis](../../evidence/2026-09-18-nullsec-overnight-run.md). Verify the actual subagent dispatch/continuation path; naming a dispatch may turn it into a teammate when teams are enabled.
+
 ## Alternatives rejected
+- Disabling agent teams globally for the overnight follow-up: the user deferred this on 2026-09-18 in favor of instructions preferring subagents and avoiding teammates. Revisit if a bounded trial cannot honor the instruction or later evidence favors teams.
 - Stage skills pinned by frontmatter (`context: fork`, `model`): Claude Code specific, invisible in the transcript, and the user prefers explicit dispatch.
 - Separate `/plan` and `/implement` sessions with a human plan review: reintroduces the spec-then-plan babysitting the user found cumbersome in superpowers.
 - Detecting the session model and warning: no API for it; would only nag.
 
 ## Consequences
-The lead's context holds the plan, briefs and short reports only. Debugging beyond one hypothesis is re-dispatched, not performed by the lead. Task results become the unit a headless executor consumes (W-004). The user is not yet convinced this is better; the trial in W-006 records evidence either way.
+The lead's context holds the plan, briefs and short reports only. Debugging beyond one hypothesis is re-dispatched, not performed by the lead. Task results become the unit a headless executor consumes (W-004). W-006 recorded a prose-only controller trial. The later nullsec overnight run supports continuity across compaction, while exposing reporting and worker-lifecycle gaps selected for W-010 through W-012; it does not establish unattended reliability in every harness.
 
 ## Reconsider when
 A trial shows the loop costs more turns or quality than a single cheaper session, a harness lets the caller change models between stages, or the headless executor needs the stages hoisted out of the skill.
