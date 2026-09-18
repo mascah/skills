@@ -2,7 +2,7 @@
 type: capability
 id: work-planning
 status: settled
-updated: 2026-09-17
+updated: 2026-09-18
 ---
 ## Behavior
 Work keeps capability scope, ordered release membership and prerequisites separate. Status shows the selected focus, structural preparation, dates, blockers, candidate shared implementations, and a next recommendation. Active unblocked work comes first, then focus/member order, then priority and ID. Batch assessment reports dependency order, external blockers, shared capabilities, and preparation gaps; agents inspect code before deciding whether writes can run in parallel.
@@ -13,7 +13,7 @@ Plans open with an execution decision: approach, reason, delegation, runtime and
 
 For bounded and large work the lead never writes code, runs a test-fix loop or reads the diff; briefs, reports, diffs, reviews and the run ledger live under gitignored `.grove-run/` in the worktree, and each task report uses the contract result shape so a harness can later consume it. Fix rounds most often catch a sentence the implementer dropped or left out of scope as "pre-existing"; briefs should name the whole section as owned, not only the lines to change.
 
-Implementation runs in an isolated worktree branch named after the work IDs, native harness tool first and git fallback second, so concurrent sessions do not collide on main. Knowledge edits and the close commit land on that branch. Close never merges or pushes main; it ends with a handoff block giving the human the merge, PR and keep-branch commands, usable from a fresh session after the original context is gone. Brief focus changes stay with shaping on main. The managed agent-instruction block installed by `grove init` states the rule.
+Implementation runs in an isolated worktree branch named after the work IDs, native harness tool first and git fallback second, so concurrent sessions do not collide on main. Knowledge edits and the close commit land on that branch. Close never merges or pushes main; it ends with a handoff block giving the human the merge, PR and keep-branch commands, usable from a fresh session after the original context is gone. Brief focus changes stay with shaping on main. The managed agent-instruction block installed by `grove init` states the rule. Commits use Conventional Commits subjects (`type(scope): summary`) with the work ID in a `Refs: W-NNN` footer rather than the subject, knowledge-only commits typed `docs` and the close commit `docs: close W-NNN`; the managed block and `references/discipline.md` both state it, so repos without a `commit-msg` hook follow it too.
 
 ## Acceptance
 - [x] A selected release and its required members are visible with dates and completion summaries.

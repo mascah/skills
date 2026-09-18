@@ -1,7 +1,7 @@
 ---
 type: work
 id: W-009
-status: active
+status: done
 created: 2026-09-18
 started: 2026-09-18
 updated: 2026-09-18
@@ -40,4 +40,4 @@ Branch `worktree-W-009` from `edab734`. Single agent, in-session (small work); n
 - `uv run --extra dev --project cli pytest cli/tests -q`: 118 passed. `grove lint`: 0 errors, 0 warnings.
 
 ## Next
-Commit conventionally and close W-009.
+None; the rule is in place. Future Grove sessions in any initialized repo commit conventionally.
