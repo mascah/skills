@@ -7,7 +7,10 @@ FIX = Path(__file__).parent / "fixtures" / "repo"
 
 
 @pytest.fixture
-def root(tmp_path):
+def root(tmp_path, monkeypatch):
+    # A git hook (lefthook pre-commit) exports GIT_DIR/GIT_INDEX_FILE; without this every `git -C tmp` hits the real repo.
+    for k in [k for k in __import__("os").environ if k.startswith("GIT_")]:
+        monkeypatch.delenv(k)
     shutil.copytree(FIX, tmp_path, dirs_exist_ok=True)
     return load_root(tmp_path)
 
