@@ -1,7 +1,7 @@
 ---
 type: work
 id: W-004
-status: active
+status: done
 started: 2026-09-17
 created: 2026-09-15
 updated: 2026-09-17
@@ -40,7 +40,7 @@ Limits before any multi-hour claim: the adapter needs `--dangerously-skip-permis
 - Adapter: `scripts/adapters/claude-p.sh`; fixture: `scripts/adapters/make-fixture.sh`.
 - 2026-09-17 step 1 at 591de29: `grove run` now accepts a tested revision that descends from the exported head and refuses an unrelated commit; `uv run --extra dev pytest -q tests/` in cli: 118 passed.
 - 2026-09-17 step 2: `scripts/adapters/claude-p.sh` written; `scripts/adapters/make-fixture.sh` builds the fixture (W-001 mechanical, W-002 needs a human word). Headless `claude -p --plugin-dir <this repo>` lists all six `grove:*` skills (probe on haiku, max-turns 1).
-- 2026-09-17 step 4 not started: the session's permission classifier refused to launch `claude -p --dangerously-skip-permissions` from the adapter, so the runs need a human to start them.
+- 2026-09-17 step 4: the session's permission classifier refused to launch `claude -p --dangerously-skip-permissions` from the adapter; the human started each run from a separate terminal.
 
 ## Next
 Close. Later work, if wanted: make `grove reconcile` and a branch-side `grove close` stop editing the same page, and try the same adapter shape on `codex exec` before claiming harness independence.
