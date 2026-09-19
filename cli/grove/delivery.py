@@ -49,9 +49,10 @@ def _declaration(repo, base_sha, candidate_sha):
 
 
 def _load_tree(repo, sha, tmp):
-    """Read-only load of grove.toml + docs/grove at sha into tmp; per-file `git show` if `git
+    """Read-only load of grove.toml + docs (not just docs/grove: a history page's `plan:` field
+    can point anywhere under docs, e.g. docs/plans/) at sha into tmp; per-file `git show` if `git
     archive` can't be read back."""
-    p = subprocess.run(["git", "-C", str(repo), "archive", sha, "grove.toml", "docs/grove"], capture_output=True)
+    p = subprocess.run(["git", "-C", str(repo), "archive", sha, "grove.toml", "docs"], capture_output=True)
     if p.returncode == 0:
         with tarfile.open(fileobj=BytesIO(p.stdout)) as tar:
             tar.extractall(tmp, filter="data")
@@ -59,7 +60,7 @@ def _load_tree(repo, sha, tmp):
             return load_root(tmp)
         except GroveError:
             pass
-    listing = subprocess.run(["git", "-C", str(repo), "ls-tree", "-r", "--name-only", sha, "grove.toml", "docs/grove"],
+    listing = subprocess.run(["git", "-C", str(repo), "ls-tree", "-r", "--name-only", sha, "grove.toml", "docs"],
                               capture_output=True, text=True)
     if listing.returncode:
         raise GroveError(f"cannot read tree at {sha}: {listing.stderr.strip()}")

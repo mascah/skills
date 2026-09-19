@@ -71,6 +71,23 @@ def test_pass_on_properly_closed_delivery(root):
     assert d == {"checked": sha, "base": git(root.repo, "rev-parse", "main"), "delivers": ["W-001"], "retains": [], "errors": []}
 
 
+def test_pass_when_history_page_has_a_plan_outside_docs_grove(root):
+    """A closed unit's page can carry `plan: docs/plans/x.md` (grove:work's shared-plan
+    convention); the candidate tree the verifier extracts must include that file too, not just
+    docs/grove, or plan_path() raises 'plan file missing' against the extracted tmp tree."""
+    init_main(root)
+    start_branch(root, "feature")
+    plan = root.repo / "docs/plans/w001.md"
+    plan.parent.mkdir(parents=True, exist_ok=True)
+    plan.write_text("# plan\n")
+    edit(root, W1, "started: 2026-09-12", "started: 2026-09-12\nplan: docs/plans/w001.md")
+    ready_w001(root)
+    close.close(root, "W-001")
+    commit_all(root, "close W-001")
+    d = delivery.verify_delivery(root, "feature", "main")
+    assert d["errors"] == []
+
+
 def test_pass_when_main_gained_another_branch_declaration_after_the_fork(root):
     """Three-dot freshness: a sibling delivery merged to main after this branch forked must not
     make this branch's own declaration look ambiguous."""
