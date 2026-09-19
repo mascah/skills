@@ -9,6 +9,7 @@ from .context import PHASES, context, render_context
 from .contract import export, load_contract, reconcile, render_receipt as render_reconcile, stale
 from .find import find
 from .init import init, upgrade
+from .launch import LaunchBlocked, launch
 from .lint import lint
 from .pages import GroveError, load_root
 from .run import EXIT, render_run, run
@@ -40,6 +41,8 @@ def build_parser():
     f.add_argument("--regex", action="store_true")
     cl = sub.add_parser("close", help="close a done work unit into history")
     cl.add_argument("work")
+    la = sub.add_parser("launch", help="print one paste-ready /goal message for one or more work units")
+    la.add_argument("work", nargs="+")
     ex = sub.add_parser("export", help="export a prepared selection as a versioned execution contract")
     ex.add_argument("work", nargs="+")
     ex.add_argument("--out", help="write the contract JSON here instead of stdout")
@@ -96,6 +99,14 @@ def main(argv=None):
             return 0
         if args.cmd == "close":
             print(render_receipt(close(root, args.work)), end="")
+            return 0
+        if args.cmd == "launch":
+            try:
+                msg = launch(root, args.work)
+            except LaunchBlocked as exc:
+                print("\n".join(exc.blockers), file=sys.stderr)
+                return 2
+            sys.stdout.write(msg)
             return 0
         if args.cmd == "export":
             c = export(root, args.work)
