@@ -1,8 +1,9 @@
 ---
 type: work
 id: W-015
-status: proposed
+status: done
 created: 2026-09-18
+started: 2026-09-18
 updated: 2026-09-18
 kind: tooling
 size: small
@@ -31,14 +32,16 @@ Drop `--ff-only` from the handoff in `skills/close/SKILL.md`; a plain `git merge
 Accepted cost, recorded in [[D-0004-every-session-branches]]: work shaped on an unmerged branch is invisible to `grove status` on main, so two shapers can mint the same W-NNN. `grove lint` errors on duplicate `id` and basename, so this surfaces at merge; the repair is a rename plus its references. Branches are meant to be merged promptly. [[W-013-shared-worktree-claims]] would remove the blind spot but is not a prerequisite.
 
 ## Acceptance
-- [ ] The `grove init` BLOCK states that every session works on a worktree branch and never commits to main, with no wording that a non-implementing session can read as exempt; `grove init` rerun updates CLAUDE.md and AGENTS.md.
-- [ ] `references/discipline.md` no longer exempts shaping and curation, and its brief `focus` sentence names an owner that is true when shaping runs on a branch.
-- [ ] `skills/shape/SKILL.md`, `skills/curate/SKILL.md` and `skills/explore/SKILL.md` each end on a branch and print a handoff block carrying the merge command; a shaping branch has a name that does not require a work ID.
-- [ ] `skills/close/SKILL.md` offers a plain `git merge`; a branch diverged from main by unrelated knowledge commits merges without a rebase.
-- [ ] `cli/tests/test_init.py` asserts the block carries the rule; the CLI suite, `grove lint` and plugin validation pass, and the change is delivered on its own branch.
+- [x] The `grove init` BLOCK states that every session works on a worktree branch and never commits to main, with no wording that a non-implementing session can read as exempt; `grove init` rerun updates CLAUDE.md and AGENTS.md.
+- [x] `references/discipline.md` no longer exempts shaping and curation, and its brief `focus` sentence names an owner that is true when shaping runs on a branch.
+- [x] `skills/shape/SKILL.md`, `skills/curate/SKILL.md` and `skills/explore/SKILL.md` each end on a branch and print a handoff block carrying the merge command; a shaping branch has a name that does not require a work ID.
+- [x] `skills/close/SKILL.md` offers a plain `git merge`; a branch diverged from main by unrelated knowledge commits merges without a rebase.
+- [x] `cli/tests/test_init.py` asserts the block carries the rule; the CLI suite, `grove lint` and plugin validation pass, and the change is delivered on its own branch.
 
 ## Evidence
 Shaping only, 2026-09-18, checkout d4e4917. Verified: `references/discipline.md:6` holds the exemption; `grep -rln discipline.md skills/ references/` returns only `skills/work/SKILL.md` and `skills/work/implementer.md`; `skills/close/SKILL.md:21` hardcodes `--ff-only`; `lefthook.yml` `commit-msg` permits `Merge ` and `Revert ` subjects; `cli/grove/lint.py:22-25,39-42` errors on duplicate basename and duplicate id. `git merge-tree --write-tree main worktree-W-009` exited 0 with a clean tree, showing the divergence carried no conflict. Branch/main timeline from `git log --date=format`: 16:36-16:37 against 16:44-16:50. No implementation performed.
 
+- 2026-09-18 T1 (init.py BLOCK, discipline.md Workspace isolation, shape/curate/explore skills, close handoff, test_init.py, CLAUDE.md and AGENTS.md via `grove init`), base 47521ad, small work run as one dispatched implementer Agent `model: sonnet`; task reviewer `model: opus` accept, 0 blocking, 4 minor (curate branch prefix folded into the W-013/W-014 guidance task). 0 fix rounds. Evidence: `test_init.py` asserts the block says sessions never commit to main; `grove lint` 0 errors; `claude plugin validate .` passed; CLI suite green for every test except two in `test_claims.py` that belonged to the concurrent in-flight W-013 T2 edit, recorded there. Merge demonstration in a throwaway temp repo: main advanced by an unrelated commit after the branch diverged, and a plain `git merge <branch>` on main succeeded without rebase (commands and output in the run's `.grove-run/W-015-T1-a1-report.md`). Delivered on branch worktree-W-010-W-016.
+
 ## Next
-Edit the BLOCK line and `references/discipline.md` together, settle the brief `focus` owner, add the handoff ending to the three planning skills, drop `--ff-only` from close, extend `cli/tests/test_init.py`, then rerun `grove init` and the suite. Schedule before or well after W-013, which also edits the managed init block and the work/close discipline; this is scheduling advice about overlapping writes, not a hard dependency.
+None for this unit; every skill now branches and hands off a plain merge. Reassess if duplicate W-NNN repair at merge becomes frequent (D-0004).
