@@ -1,8 +1,9 @@
 ---
 type: work
 id: W-012
-status: proposed
+status: done
 created: 2026-09-18
+started: 2026-09-18
 updated: 2026-09-18
 kind: fix
 size: small
@@ -25,12 +26,14 @@ Extend the whole-branch review instructions in `skills/work/SKILL.md`, `skills/w
 Representative cases from nullsec: dispatch -> close/reopen optional view -> return -> dispatch again; damaged return -> next dispatch; duration label -> actual completion semantics. These are examples to reason about, not a universal game checklist. Product-specific assertions belong to the owning project's work. Distinguish mechanical defects, missing evidence and reserved human judgments in the report.
 
 ## Acceptance
-- [ ] Final review instructions require a short affected interaction/recovery sequence and evidence mapping, with an explicit disposition for each uncovered transition.
-- [ ] A walkthrough using the nullsec examples exposes stale-view, damaged-redispatch and misleading-label gaps without calling the green component suite sufficient evidence; a non-UI example demonstrates that browser testing is not mandatory.
-- [ ] Verification rules retain useful existing evidence, delegate only missing checks and leave deferred human judgments unchecked. `grove lint` and plugin validation pass.
+- [x] Final review instructions require a short affected interaction/recovery sequence and evidence mapping, with an explicit disposition for each uncovered transition.
+- [x] A walkthrough using the nullsec examples exposes stale-view, damaged-redispatch and misleading-label gaps without calling the green component suite sufficient evidence; a non-UI example demonstrates that browser testing is not mandatory.
+- [x] Verification rules retain useful existing evidence, delegate only missing checks and leave deferred human judgments unchecked. `grove lint` and plugin validation pass.
 
 ## Evidence
 Shaping source: [nullsec run analysis](../../evidence/2026-09-18-nullsec-overnight-run.md). No implementation performed.
 
+- 2026-09-18 T1 (SKILL.md whole-branch review step, reviewer.md whole-branch variant, planning.md preparation sentence, discipline.md review rule), base 330a2e5, small work run as one dispatched implementer Agent `model: sonnet`; task reviewer `model: opus` a1 fix (2 blocking: the one fix dispatch had been narrowed to exclude the verification worker's findings; report cited a stale revision; 2 minor); fix round 1 resumed the same implementer (a2); scoped re-review by the same reviewer: accept. 1 fix round. Evidence: `grove lint` 0 errors, `claude plugin validate .` passed. Walkthroughs (recorded, in the run's `.grove-run/W-012-walkthroughs.md`): nullsec sequence (dispatch → close/reopen 3D view → return → dispatch; damaged return → next dispatch; duration label → completion semantics) with a green component suite lands all three transitions on "missing evidence" with a named check, never on "covered"; non-UI sequence (`grove launch` CLI plus skill text) satisfies its mechanical transitions from existing test evidence, reserves one human judgment unchecked, and needs no browser suite.
+
 ## Next
-Small work, single agent: revalidate against the current work/review instructions, add the affected-sequence and evidence-gap rule, run the two walkthroughs and existing validation, then reconcile work-planning. Interactive runtime; no delegation needed. Reassess if this requires an executable verification framework instead of prompt guidance. Implement after the selected reliability batch to avoid concurrent writes to the same instructions; this is scheduling advice, not a hard dependency.
+None for this unit; the final-review sequence rule is in place. Reassess only if a run needs an executable verification framework instead of prompt guidance.
