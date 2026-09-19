@@ -4,6 +4,7 @@ import json
 import sys
 from pathlib import Path
 from . import __version__
+from .claims import Owned, acquire, list_claims, release, render_claims
 from .close import close, render_receipt
 from .context import PHASES, context, render_context
 from .contract import export, load_contract, reconcile, render_receipt as render_reconcile, stale
@@ -41,6 +42,13 @@ def build_parser():
     f.add_argument("--regex", action="store_true")
     cl = sub.add_parser("close", help="close a done work unit into history")
     cl.add_argument("work")
+    cm = sub.add_parser("claim", help="acquire, release or take over work claims")
+    cm.add_argument("work", nargs="+")
+    cm.add_argument("--release", action="store_true", help="release claims owned by this checkout")
+    cm.add_argument("--take", action="store_true", help="re-acquire regardless of current owner")
+    cm.add_argument("--json", action="store_true")
+    cs = sub.add_parser("claims", help="list claims with branch/worktree observations")
+    cs.add_argument("--json", action="store_true")
     la = sub.add_parser("launch", help="print one paste-ready /goal message for one or more work units")
     la.add_argument("work", nargs="+")
     ex = sub.add_parser("export", help="export a prepared selection as a versioned execution contract")
@@ -100,6 +108,24 @@ def main(argv=None):
         if args.cmd == "close":
             print(render_receipt(close(root, args.work)), end="")
             return 0
+        if args.cmd == "claim":
+            if args.release:
+                if args.take:
+                    raise GroveError("--release and --take are mutually exclusive")
+                d = {wid: True for wid in release(root, args.work)}
+                verb = "released"
+            else:
+                d = acquire(root, args.work, take=args.take)
+                verb = "took" if args.take else "claimed"
+            if args.json:
+                print(json.dumps(d, indent=2))
+            else:
+                print("\n".join(f"{verb} {wid}" for wid in d) or "nothing to release")
+            return 0
+        if args.cmd == "claims":
+            d = list_claims(root)
+            print(json.dumps(d, indent=2) if args.json else render_claims(d), end="" if not args.json else "\n")
+            return 0
         if args.cmd == "launch":
             try:
                 msg = launch(root, args.work)
@@ -132,6 +158,9 @@ def main(argv=None):
             r = run(root, Path(args.contract), adapter, args.state, args.max_attempts, args.timeout)
             print(render_run(r), end="")
             return EXIT[r["outcome"]]
+    except Owned as exc:
+        print(f"grove: {exc}", file=sys.stderr)
+        return 4
     except GroveError as exc:
         print(f"grove: {exc}", file=sys.stderr)
         return 1
