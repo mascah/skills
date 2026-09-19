@@ -1,8 +1,9 @@
 ---
 type: work
 id: W-011
-status: proposed
+status: done
 created: 2026-09-18
+started: 2026-09-18
 updated: 2026-09-18
 kind: fix
 size: small
@@ -30,13 +31,16 @@ On resume, compare the checkpoint with Git status, current work state and any li
 No hard prerequisite: this can use the existing dispatch ledger independently. W-010 is a shared implementation candidate because its result identities improve the joint recovery trial, not because it must close first.
 
 ## Acceptance
-- [ ] Instructions cover standalone work, a batch without a release, and release members. Each keeps its own work state and Next current; only the release case activates and updates an umbrella.
-- [ ] The checkpoint contains enough information to locate the current attempt, consumed evidence, live work/owners, pending judgments and next action without loading worker transcripts or full diffs.
-- [ ] Recovery scenarios cover standalone work, a batch and a release with completed steps, outstanding activity and a deferred human gate: no completed step or accepted attempt is repeated, outstanding work is reconciled, and human boxes remain unchecked. Standalone/batch scenarios require no umbrella; the release scenario keeps its umbrella active.
-- [ ] Small single-agent work uses existing Next/evidence without a worker ledger. Close/handoff checks selected work state and any applicable umbrella state; `grove lint` and plugin validation pass, with scenario results and limitations recorded.
+- [x] Instructions cover standalone work, a batch without a release, and release members. Each keeps its own work state and Next current; only the release case activates and updates an umbrella.
+- [x] The checkpoint contains enough information to locate the current attempt, consumed evidence, live work/owners, pending judgments and next action without loading worker transcripts or full diffs.
+- [x] Recovery scenarios cover standalone work, a batch and a release with completed steps, outstanding activity and a deferred human gate: no completed step or accepted attempt is repeated, outstanding work is reconciled, and human boxes remain unchecked. Standalone/batch scenarios require no umbrella; the release scenario keeps its umbrella active.
+- [x] Small single-agent work uses existing Next/evidence without a worker ledger. Close/handoff checks selected work state and any applicable umbrella state; `grove lint` and plugin validation pass, with scenario results and limitations recorded.
 
 ## Evidence
 Shaping source: [nullsec run analysis](../../evidence/2026-09-18-nullsec-overnight-run.md). No implementation performed.
 
+- 2026-09-18 T1 (SKILL.md checkpoint/scale/resume sentences, close/SKILL.md steps 4 and 7, planning.md one-sentence pointer), base 78462ae, small work run as one dispatched implementer Agent `model: sonnet`; task reviewer `model: opus` accept, 0 blocking, 6 minor (two wording items folded into the W-012 dispatch). Implementer evidence: `grove lint` 0 errors, `claude plugin validate .` passed. Recorded replay (not runtime), five scenarios in the run's `.grove-run/W-011-scenarios.md`: (a) standalone bounded unit, (b) batch without a release, (c) release with one closed member and an active umbrella, (d) small single-agent work from Next/Evidence alone, (e) handles lost after a process restart. Reviewer traced every decision to a sentence in the final text: no completed step or consumed attempt repeated, outstanding attempt resumed or recorded as interrupted before a new attempt, human boxes unchecked in all five, umbrella touched only in (c). Runtime evidence for the same rules: this run's own lead resumed dispatched workers by handle and consumed each attempt once (see W-010 evidence). Limitation: no lead compaction occurred during this run, so checkpoint recovery after compaction is shown by replay only.
+- 2026-09-18 cold checkpoint read (verification worker Agent `model: sonnet`, named by the whole-branch review for transition "resume from ledger + Next"), at e915c20: from `.grove-run/ledger.md`, the work pages' status and Next, `git log` and `git status` alone, with no report, review or transcript, the worker reconstructed the selected order, open attempts, every attempt's verdict and tested revision, outstanding handles, pending human items and the next action; nothing needed a report file. Two lessons recorded: a ledger line that was later corrected reads as a false positive in isolation (write the correction on the line's own subject, or mark it), and stale pre-implementation Next text misleads a cold reader, which is why close rewrites Next.
+
 ## Next
-Apply with W-010 in the shared sequential plan; extend existing ledger/Next guidance and verify recovery for standalone work, a batch and a release. Independently implementable if batching is inconvenient.
+None for this unit; checkpoint and resume rules are in place. Record the first real lead compaction recovery in work-planning when one happens.
