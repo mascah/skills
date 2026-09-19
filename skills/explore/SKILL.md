@@ -11,6 +11,6 @@ Exploring is a conversation, not preparation. Contribute ideas in prose. Take on
 
 A recommendation sitting in a draft page is a draft. Test it against the brief and a concrete user before repeating it. Code, data and placeholder content show what the checkout does, not what the project intends; cite them as design only when a capability or decision page owns them.
 
-Write nothing to the knowledge tree until the human says a point is settled or leaning. Then record that point once, in its owner, and commit. Evidence holds settled points and the human's actual reactions, never a turn log. If no idea lands, say so and record the reaction only when asked.
+Write nothing to the knowledge tree until the human says a point is settled or leaning. Before that first write, enter a worktree branch: use the harness's native `EnterWorktree` when it exists, otherwise `git worktree add`, with the same detection `references/discipline.md` uses; with no work ID yet, name it for the topic (`worktree-shape-<slug>`). Then record that point once, in its owner, and commit on the branch with a Conventional Commits `docs` subject, ending the final message with the handoff block `skills/close/SKILL.md` uses. Evidence holds settled points and the human's actual reactions, never a turn log. If no idea lands, say so and record the reaction only when asked.
 
 When the human selects an outcome, continue with `grove:shape` to prepare it.

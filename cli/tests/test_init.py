@@ -13,6 +13,7 @@ def test_init_fresh_repo(tmp_path):
     for f in ("CLAUDE.md", "AGENTS.md"):
         t = (tmp_path / f).read_text()
         assert t.count(init.BLOCK_BEGIN) == 1 and "grove status" in t and "grove context --work" in t and "grove lint" in t and "grove:close" in t and "Conventional Commits" in t and "Refs: <id>" in t
+        assert "never commits to main" in t
     assert "wrote grove.toml" in actions and "wrote CLAUDE.md block" in actions
     assert load_root(tmp_path).project == tmp_path.name
 

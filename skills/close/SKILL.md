@@ -18,8 +18,8 @@ Read `../../references/knowledge-format.md` once.
 
 ```text
 Branch worktree-W-NNN-slug at .claude/worktrees/W-NNN-slug: <one line on what it contains>. Options:
-  Merge locally:   git -C <repo root> merge --ff-only worktree-W-NNN-slug && git worktree remove .claude/worktrees/W-NNN-slug
+  Merge locally:   git -C <repo root> merge worktree-W-NNN-slug && git worktree remove .claude/worktrees/W-NNN-slug
   Open a PR:       git push -u origin worktree-W-NNN-slug && gh pr create --fill   (only when a remote exists)
   Keep the branch: nothing to do; resume with EnterWorktree path=.claude/worktrees/W-NNN-slug
-If the fast-forward is refused, main moved: run git rebase main in the worktree, rerun grove lint and the checks, then retry.
+If the merge conflicts, resolve or rebase, rerun grove lint and the checks, then retry.
 ```
