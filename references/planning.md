@@ -63,7 +63,7 @@ Stop research when more investigation is unlikely to change the next useful acti
 
 ## Interruption and autonomous callers
 
-Keep Next, completed plan steps, evidence paths, and unresolved findings durable. On resume inspect Git changes, the recorded plan/base, prior evidence, and currently running work before repeating steps. Preserve partial work. Checks invalidated by code changes must run again; unchanged evidence remains attributable to its tested revision, and new success claims require current verification.
+Keep Next, completed plan steps, evidence paths, and unresolved findings durable. The run checkpoint — the ledger head plus each selected work page's Next, covering selected IDs, current task/attempt, completed tasks with consumed attempt id and tested revision, outstanding handles and owners, pending human judgments, and next action — is owned by `skills/work/SKILL.md`. On resume inspect Git changes, the recorded plan/base, prior evidence, and currently running work before repeating steps. Preserve partial work. Checks invalidated by code changes must run again; unchanged evidence remains attributable to its tested revision, and new success claims require current verification.
 
 Consume each attempt's result once, against its ledgered identity, and investigate rather than accept a mismatched or missing return; `skills/work/SKILL.md`'s controller loop states the full consume-once and owned-wait rules.
 
