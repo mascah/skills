@@ -33,3 +33,15 @@ verdict: accept | fix
 tested revision: <base revision the diff is against>
 report: .grove-run/<task>-a<N>-review.md
 ```
+
+## Whole-branch review
+
+For the final review of a multi-component change, the brief also carries the lead's affected-sequence list (3-6 transitions across component boundaries, derived from the outcome and changed interfaces). Add a sequence-and-disposition table to the full review, one row per transition:
+
+```text
+| Transition | Evidence | Disposition |
+| --- | --- | --- |
+| <e.g. dispatch → close/reopen view → return → dispatch again> | <test/report line/screenshot, or "none"> | mechanical defect found (cite it) / missing evidence (name the check to run) / reserved human judgment (leave the acceptance box unchecked, name it) |
+```
+
+A passing component check never satisfies a transition by itself, and a screenshot's existence is not evidence of what it shows — state what it actually shows or mark the transition missing evidence. Every uncovered transition needs one of the three dispositions above; there is no fourth "assumed fine" outcome. A transition satisfied by cited evidence needs no disposition.

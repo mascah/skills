@@ -10,7 +10,7 @@ Before implementation, inspect the actual checkout and prepare:
 
 - The chosen approach, affected files/interfaces, and constraints that must survive.
 - Steps producing reviewable outcomes in dependency order, each tied to acceptance.
-- Meaningful checks at the relevant layer, joint integration checks, and any required human judgment. Fix measurement thresholds before running comparisons.
+- Meaningful checks at the relevant layer, joint integration checks, and any required human judgment. Fix measurement thresholds before running comparisons. For a multi-component change, name the affected interaction/recovery sequence the final review will check.
 - Risks that affect implementation, checkpoints for larger work, and a concrete next action on interruption.
 
 Small work can use a concrete Next action and its acceptance checks. Bounded and large work use an inline `## Plan` or a repo-relative `plan` file. A spike needs its Question, Bounds, an experiment plan, and a Disposition on completion. Plans should identify the checkout/base revision inspected. Revalidate code, constraints, and prerequisites on execution and resume; file existence is only structural preparation.

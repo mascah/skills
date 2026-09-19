@@ -21,7 +21,7 @@ Consume each attempt once, investigate a mismatched or missing return instead of
 "Done", "passing", "fixed" are said only after performing the verification that proves it in this session and reading its result. Record commands, results and tested revision in Evidence. Human acceptance uses the actual attributed response; a command cannot establish taste or usability judgment. If a check was skipped, say so in Evidence.
 
 ## Review at bounded and large
-Before close the branch is reviewed as a whole. For bounded and large work the dispatched whole-branch review does this, and the lead reads its review file, not the full diff, checking that it covers whether the change does only what the work unit says, each acceptance line has evidence, and no capability's behavior changed without its page changing.
+Before close the branch is reviewed as a whole. For bounded and large work the dispatched whole-branch review does this, and the lead reads its review file, not the full diff, checking that it covers whether the change does only what the work unit says, each acceptance line has evidence, and no capability's behavior changed without its page changing. For a multi-component change, the review's coverage includes a sequence-and-disposition table mapping each affected interaction/recovery transition to evidence, a mechanical defect, or a named reserved human judgment.
 
 ## Subagents
 Allowed for independent investigation or parallel implementation. For bounded and large work the controller loop requires them; small work can still finish in-session. The interactive lead still owns the work unit file, the evidence, and the close.
