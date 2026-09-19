@@ -14,6 +14,9 @@ When behavior differs from expectation: reproduce it once, read the code path th
 ## Lead never debugs
 For bounded and large work the lead does not run a test-fix loop itself: a failing check returns to a dispatched implementer with the finding attached, and the debugging rule above (one hypothesis at a time, three failures then stop) applies inside the implementer. Small work keeps the existing in-session rule.
 
+## Worker results and waits
+Consume each attempt once, investigate a mismatched or missing return instead of accepting it, and never poll an empty notification queue or start a replacement worker on a task an open attempt still owns — the controller loop in `skills/work/SKILL.md` states this in full.
+
 ## Verification before any claim
 "Done", "passing", "fixed" are said only after performing the verification that proves it in this session and reading its result. Record commands, results and tested revision in Evidence. Human acceptance uses the actual attributed response; a command cannot establish taste or usability judgment. If a check was skipped, say so in Evidence.
 

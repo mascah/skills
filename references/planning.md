@@ -29,9 +29,9 @@ Choose the execution approach during preparation, after inspecting dependencies,
 
 Before choosing a team, name the overlapping tasks, file/workspace owners, stable interfaces, independent acceptance checks, integration owner and combined checks. Explain why expected progress or quality warrants duplicated context, coordination and merge costs. Work-item count, duration and disjoint capability labels alone do not establish useful parallelism. If those conditions are unproven, start with a single lead and record when to reassess.
 
-Model rules for the controller loop default to sonnet for implementers and opus for reviewers and escalated fixes; `skills/work/SKILL.md` owns the full rules.
+Model rules for the controller loop default to sonnet for implementers and opus for reviewers and escalated fixes; `skills/work/SKILL.md` owns the full rules. Every dispatch is an ordinary subagent via the Agent tool with an explicit model, not a teammate; verify the actual returned handle on the run's first dispatch rather than assuming the phrase "no teams" is enough.
 
-Each task report uses the contract result shape (contract, work, outcome, tested revision, evidence, findings, next) so a harness can later consume it; briefs, reports, diffs and reviews for a run live under `.grove-run/` in the worktree.
+Each task's full report uses the contract result shape (contract, work, attempt, outcome, tested revision, evidence, findings, next) and lives at an attempt-specific path under `.grove-run/` in the worktree (briefs, `<task>-a<N>-report.md`, `<task>-a<N>-diff.patch`, `<task>-a<N>-review.md`, ledger); the dispatch's own completion return is the compact subset of that shape plus the report path, never the full report repeated.
 
 Choose durability separately: an interactive session or an available durable executor for unattended continuation, checkpoints and recovery across sessions. Long serial work can need a durable executor without needing a team. Tmux provides process visibility; the driver supplies supervision and recovery. Name the actual supported executor or record the unmet requirement; a plan must not claim an unimplemented adapter is available. `grove run CONTRACT -- ADAPTER...` is the local executor: one attempt per invocation, one owner per attempt, durable ledger, bounded attempts and unchanged-wait skipping. Only a fake process adapter has been exercised; no harness adapter is demonstrated until W-004 records one.
 
@@ -64,5 +64,7 @@ Stop research when more investigation is unlikely to change the next useful acti
 ## Interruption and autonomous callers
 
 Keep Next, completed plan steps, evidence paths, and unresolved findings durable. On resume inspect Git changes, the recorded plan/base, prior evidence, and currently running work before repeating steps. Preserve partial work. Checks invalidated by code changes must run again; unchanged evidence remains attributable to its tested revision, and new success claims require current verification.
+
+Consume each attempt's result once, against its ledgered identity, and investigate rather than accept a mismatched or missing return; `skills/work/SKILL.md`'s controller loop states the full consume-once and owned-wait rules.
 
 For a headless caller, return the work IDs, plan path, current activity, evidence references, next action, and a concrete waiting condition. The durable form is the W-002 contract: `grove export` produces the input and `grove reconcile` accepts a result only against unchanged inputs; a `waiting` result names what it waits on and which paths would change when it is answered. Persist a question when human input is needed; continue independent authorized work. An unchanged wait should not trigger another investigation. Runtime process ownership, scheduling, and retry enforcement belong to the executor, not to a claim made by a skill.
