@@ -15,6 +15,8 @@ The tested revision in a result must descend from the exported checkout head (`g
 
 `scripts/adapters/claude-p.sh` is the first real adapter (W-004). It creates or resumes the worktree `.worktrees/<ids>` on branch `<ids>` from the exported head, runs `claude -p` inside it with the grove plugin loaded (`GROVE_PLUGIN_DIR`, default this repository), `GROVE_MODEL` (default sonnet) and permissions bypassed, telling the agent it is headless: run `grove:work`, commit to the branch with a Conventional Commits subject and a `Refs:` footer, write `result.json` in the attempt directory, and emit a `waiting` result instead of asking. Afterwards it overwrites the result's contract and work identity from the contract, fills the tested head from the branch, and appends the tail of `GROVE_TEST_CMD` output as evidence. It was exercised on one small fixture unit: interruption resumed on the existing branch, human-wait, duplicate wake, unchanged wait and success all produced their specified exit codes. Launching it needs a human shell or a scheduler; Claude Code's own permission classifier refuses to start a permission-bypassing session from inside another session.
 
+`grove launch <ids>` prints exactly one `/goal` line on stdout for an interactive Claude Code session: the ids in dependency order inside a `grove:work` invocation, the finished state (`grove status` lists each unit under Recent, `grove lint` 0 errors, commits on the worktree branch with Conventional Commits subjects and `Refs:` footers, a merge handoff in the final message), the parked alternative (fix rounds exhausted or a human judgment pending, named in Next) and the two drift rules (never write code, run tests or debug in the session; resume from `grove status` and `.grove-run/ledger.md` after compaction). It validates through `batch()`: closed, unknown and release ids are refused with a `grove:` error and exit 1, external blockers exit 2 with the blockers on stderr, and preparation gaps still print. The message names no model, harness setting or worktree path. Whether the goal survives compaction is unverified until W-016's interactive trial is recorded.
+
 The suite does not schedule work; scheduling belongs to whatever re-invokes `grove run`. Harness registration makes skills discoverable; it does not establish runtime compatibility. A branch-side `grove close` and a checkout-side `grove reconcile` both edit the same work page, so the human's merge conflicts there.
 
 ## Acceptance
@@ -29,7 +31,9 @@ W-002 planning assessed the Bench loop at Bench `e39848a`: its ledger needs a ha
 
 ## Code
 - cli/grove/contract.py
+- cli/grove/launch.py
 - cli/grove/run.py
+- cli/tests/test_launch.py
 - cli/tests/test_contract.py
 - cli/tests/test_run.py
 - scripts/adapters/claude-p.sh

@@ -1,14 +1,16 @@
 ---
 type: work
 id: W-014
-status: proposed
+status: done
 created: 2026-09-18
+started: 2026-09-18
 updated: 2026-09-18
 kind: feature
 size: bounded
 scope: [work-planning]
 priority: 2
 depends_on: []
+plan: docs/plans/W-013-W-014-worktree-completion.md
 batch: worktree-completion
 batch_reason: Shared lifecycle instructions and a joint claim-to-closed-handoff scenario; prepare together and serialize edits to CLI and skills.
 ---
@@ -31,16 +33,19 @@ Each delivered ID must resolve uniquely to archived, successfully closed work in
 Have the close workflow prepare the declaration, commit reconciled closure, run the validator against that commit and only then print a successful completion handoff. A failure leaves an actionable repair/resume path. A partial handoff names the closed delivered subset and pending work clearly. Return deterministic exit status plus human-readable and machine-readable results usable by future PR checks. Direct Git merges remain outside this check's enforcement.
 
 ## Acceptance
-- [ ] Regression fixtures reject a declaration delivering a still-proposed unit, active unit, done-but-unarchived unit, abandoned unit, missing ID or invalid closure evidence/relationships; a properly closed committed delivery passes.
-- [ ] Uncommitted closure cannot make an open committed candidate pass. Advancing the branch after a previous pass validates the newly resolved candidate, and output identifies exactly which commit was checked.
-- [ ] Missing/malformed/inapplicable or inherited stale declarations fail actionably. A multi-unit delivery with one unfinished declared unit fails; explicit partial delivery passes only for its properly closed subset and reports remaining work.
-- [ ] The check runs read-only in a fresh clone without claims or local executor state and reports equivalent results for the same committed inputs through text/JSON and exit status.
-- [ ] Shared closure validation retains dependency, release-member, blocking-question, acceptance/disposition, evidence and capability-reconciliation requirements without moving files or automatically closing tasks.
-- [ ] Close instructions commit closure and delivery metadata, then validate before successful completion handoff. A representative lifecycle walkthrough demonstrates failure on omitted closure and success after repair, with limits on merge enforcement and human judgment stated.
-- [ ] Focused validator/CLI regression tests, the full existing CLI suite, grove lint and plugin validation pass; actual commands and tested revision are recorded.
+- [x] Regression fixtures reject a declaration delivering a still-proposed unit, active unit, done-but-unarchived unit, abandoned unit, missing ID or invalid closure evidence/relationships; a properly closed committed delivery passes.
+- [x] Uncommitted closure cannot make an open committed candidate pass. Advancing the branch after a previous pass validates the newly resolved candidate, and output identifies exactly which commit was checked.
+- [x] Missing/malformed/inapplicable or inherited stale declarations fail actionably. A multi-unit delivery with one unfinished declared unit fails; explicit partial delivery passes only for its properly closed subset and reports remaining work.
+- [x] The check runs read-only in a fresh clone without claims or local executor state and reports equivalent results for the same committed inputs through text/JSON and exit status.
+- [x] Shared closure validation retains dependency, release-member, blocking-question, acceptance/disposition, evidence and capability-reconciliation requirements without moving files or automatically closing tasks.
+- [x] Close instructions commit closure and delivery metadata, then validate before successful completion handoff. A representative lifecycle walkthrough demonstrates failure on omitted closure and success after repair, with limits on merge enforcement and human judgment stated.
+- [x] Focused validator/CLI regression tests, the full existing CLI suite, grove lint and plugin validation pass; actual commands and tested revision are recorded.
 
 ## Evidence
 Shaping only, 2026-09-18: builder's repeated missed-closure report and acceptance of a separate check, with possible PR automation later. Inspected skills checkout c88b228: cli/grove/close.py, cli/grove/cli.py and skills/close/SKILL.md. The current close gate validates only when called; the skill handoff offers raw Git merge commands. No validator implementation or verification performed.
 
+- 2026-09-18 T3 (`cli/grove/close.py` factored into `closure_errors` plus `record_delivery`, `cli/grove/delivery.py`, `cli/grove/cli.py`, `cli/tests/test_close.py`, `cli/tests/test_delivery.py`, one `git_init` line in `cli/tests/test_workflow.py`), base cb834c7: implementer Agent `model: sonnet`; task reviewer `model: opus` a2 fix (1 blocking: close renamed the page into history before the declaration write could fail; 11 minor), a3 accept. 2 fix rounds, both on the same sonnet implementer. Evidence: suite 169 passed, `grove lint` 0 errors, `claude plugin validate .` passed. Tests in real temp git repos: properly closed committed delivery passes; still-proposed, active, done-but-unarchived, abandoned, missing and invalid-closure ids rejected; uncommitted closure does not make an open committed candidate pass; advancing the branch re-checks the new sha and `checked <sha>` names it; inherited declaration exits 2; multi-unit delivery with one unfinished unit fails; explicit `retains` partial delivery passes for the closed subset and reports the rest; a fresh `git clone` gives the same JSON and exit status; freshness uses merge-base so another branch's merged declaration does not make a correct branch ambiguous; unresolvable base exits 2; detached HEAD refusal leaves the live page in place.
+- 2026-09-18 T4 shared with W-013 (close SKILL.md: `grove close` writes closure and the declaration, a commit step, then `grove verify-delivery` with repair and recommit before the handoff, which carries `grove claim --release` and names `retains`; discipline.md limits: structure and references only, direct `git merge` bypasses; init BLOCK line; workflow test), base 312a946: implementer Agent `model: sonnet`; reviewer `model: opus` a1 fix (1 blocking on step order), a2 accept. 1 fix round. Suite 170 passed, `grove lint` 0 errors, `claude plugin validate .` passed. Lifecycle walkthrough is the executable test: failure when the declaration names a still-proposed unit, success after repair.
+
 ## Next
-Prepare with W-013 via grove batch W-013 W-014. Inspect close/work/index and Git contract helpers; choose the committed declaration contract, candidate/base validation, historical closure checks and partial-delivery semantics in a shared plan. Implement sequentially where CLI and lifecycle instructions overlap; W-014 can ship independently of claims. PR automation and a merge wrapper remain later options.
+None for this unit; close writes the declaration and verify-delivery gates the handoff. PR automation and a merge wrapper remain later options (D-0003).

@@ -1,8 +1,9 @@
 ---
 type: work
 id: W-016
-status: proposed
+status: active
 created: 2026-09-18
+started: 2026-09-18
 updated: 2026-09-18
 kind: tooling
 size: small
@@ -34,13 +35,16 @@ One subcommand and one test file; no skill, no hook, no change to `grove:work`, 
 Rejected: a `grove:launch` skill, since no judgment is added and a skill costs a model turn per launch; sharing text with `scripts/adapters/claude-p.sh`, whose headless prompt ends in a waiting result rather than a parked state, until a second consumer exists.
 
 ## Acceptance
-- [ ] `grove launch W-A W-B` prints exactly one line on stdout, beginning with `/goal `, naming each selected ID in dependency order inside a `grove:work` invocation, the finished state, the parked state and both drift rules; nothing else reaches stdout.
-- [ ] Closed, unknown and release IDs are refused with a `grove:` error; an external blocker exits 2 with the batch blockers on stderr; a selection that only needs a plan still prints.
-- [ ] `cli/tests/test_launch.py` covers the lines above; the CLI suite, `grove lint` and plugin validation pass.
+- [x] `grove launch W-A W-B` prints exactly one line on stdout, beginning with `/goal `, naming each selected ID in dependency order inside a `grove:work` invocation, the finished state, the parked state and both drift rules; nothing else reaches stdout.
+- [x] Closed, unknown and release IDs are refused with a `grove:` error; an external blocker exits 2 with the batch blockers on stderr; a selection that only needs a plan still prints.
+- [x] `cli/tests/test_launch.py` covers the lines above; the CLI suite, `grove lint` and plugin validation pass.
 - [ ] One pasted message in an interactive Claude Code session on a small unit records in Evidence: the goal loop invoked `grove:work`, the session ended on closed or parked, and whether a compaction occurred and the goal persisted, or that none was observed.
 
 ## Evidence
 Shaping only, 2026-09-18, checkout 12124c1. Verified: `cli/grove/cli.py` registers subcommands with argparse and routes `export` through `batch()` then `export()`; `batch()` in `cli/grove/work.py` refuses history, done and release IDs, returns dependency order, external blockers and preparation gaps; `render_status` in `cli/grove/status.py:95` prints closed work under `## Recent`; `skills/close/SKILL.md` ends with the merge handoff block the condition relies on; `skills/work/SKILL.md` stops after fix round 5 and reports to the human. Claude Code 2.1.277 `strings` output contains `restoreGoalFromTranscript` and `ProposeGoalTool`; the `/goal` docs describe the condition-checking loop, `/goal clear`, and `claude -p "/goal ..."`, and do not document compaction or chaining slash commands. Human reactions in the explore session: the CLI "makes sense"; interactive use with Remote Control is the need, headless "still not something I fully have a need for yet"; "yes lets add this". No implementation performed.
 
+- 2026-09-18 T1 (`cli/grove/launch.py`, `cli/grove/cli.py`, `cli/tests/test_launch.py`), base 82d4b16, committed 346a5a9: implementer Agent `model: sonnet`; task reviewer `model: opus` accept, 0 blocking, 4 minor. 0 fix rounds. Evidence: 7 new tests (one stdout line with `/goal ` prefix, ordered ids in a `grove:work` clause, finished state, parked state, both drift rules; `W-000` and `W-999` refused with `grove:` on stderr exit 1; unclosed external `depends_on` exits 2 with the blocker on stderr and empty stdout; preparation-gap-only selection prints), suite 125 passed, `grove lint` 0 errors, `claude plugin validate .` passed; `grove launch W-016` printed one line starting `/goal W-016 are finished in this repo; reach that by running the grove:work skill for W-016 on a worktree branch.`
+- 2026-09-18 interactive observation, partial: the session that implemented this branch was started from a hand-pasted `/goal` whose text matches the launch template for `W-010 … W-016` (same condition, finished state, parked state and drift rules, without the `grove launch` comma formatting), because the command did not exist yet. The goal loop did start `grove:work`, the lead never wrote code or tests, and no compaction occurred in the session, so goal persistence across compaction was not observed. This is not the acceptance trial: the message was not produced by `grove launch` and the unit was not small. Box 4 stays unchecked.
+
 ## Next
-Write the failing test for the one-line output and the refusals, add `launch.py` and the subcommand, run the suite, then paste one generated message into an interactive session on a small unit and record what the goal loop did. Independent of the W-010/W-011 batch: it adds a CLI module and touches no skill text, so it can run before or after.
+Parked on box 4, a human-run trial: in a fresh interactive Claude Code session on this repo after merging, run `uv run --project cli grove launch <one small unit>` and paste the line as the session's `/goal`; record in Evidence whether the goal loop invoked `grove:work`, whether the session ended closed or parked, and whether a compaction occurred and the goal persisted (or that none was observed). Then check box 4 and run `grove close W-016`. Code, tests and the capability page are done and merged with this branch.

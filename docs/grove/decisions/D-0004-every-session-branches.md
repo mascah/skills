@@ -24,7 +24,7 @@ The builder chose this on 2026-09-18 over the cheaper alternatives below, accept
 ## Consequences
 Main becomes integration-only, so `grove status` on main cannot see work shaped on an unmerged branch. This makes W-NNN minting races more likely, not less: two shapers on separate branches can both take the next free id, where shaping on main serialized them through one index. `grove lint` already errors on duplicate `id` and duplicate basename, so a collision is caught at merge rather than silently kept, and the repair is a rename plus its `depends_on`, `members`, `batch` and `focus` references. Branches are therefore meant to be merged promptly, not accumulated. No id allocator is introduced.
 
-Brief `focus` is a single shared value that shaping used to own on main. With shaping on a branch it needs a stated owner rather than last-merge-wins. The pressure for W-013's cross-worktree visibility increases, but neither unit blocks the other. [[W-013-shared-worktree-claims]]
+Brief `focus` is a single shared value that shaping used to own on main. With shaping on a branch it needs a stated owner rather than last-merge-wins. The pressure for W-013's cross-worktree visibility increases, but neither unit blocks the other. W-013 (closed 2026-09-18, shared worktree claims)
 
 ## Reconsider when
 Duplicate-id repair at merge becomes frequent enough to justify an allocator, the per-session merge proves more friction than the shared-index hazard it removes, or W-013's claims registry can carry shaping ownership directly.
