@@ -2,9 +2,10 @@ import json
 
 import pytest
 
-from grove import cli, close, context, lint, status
-from grove.pages import GroveError
+from grove import cli, claims, close, context, delivery, lint, status
+from grove.pages import GroveError, load_root
 from conftest import git_init
+from test_delivery import commit_all, git, init_main, ready_w001
 
 
 def work(root, wid, *, kind="feature", size="bounded", extra="", body="", done=False):
@@ -211,3 +212,45 @@ def test_close_refuses_unresolved_relationship_preparation(root, kind, body, mes
     p.write_text(p.read_text().replace("status: proposed", "status: done").replace("- [ ]", "- [x]"))
     with pytest.raises(GroveError, match=message):
         close.close(root, "W-101")
+
+
+# --- end-to-end lifecycle: claim -> close -> declare -> verify -> release ----------------------
+
+def test_lifecycle_claim_close_verify_release(root, tmp_path):
+    """W-013 acceptance 6 / W-014 acceptance 6-7: one real repo with main and a linked worktree,
+    exercised through the whole handoff sequence a human would run."""
+    init_main(root)
+    wt = tmp_path.parent / (tmp_path.name + "-wt")
+    git(root.repo, "worktree", "add", "-b", "feature", str(wt))
+    branch = load_root(wt)
+
+    claims.acquire(branch, ["W-001"])
+    assert claims.load_claims(root.repo)["claims"]["W-001"]["branch"] == "feature"
+
+    ready_w001(branch)
+    close.close(branch, "W-001")
+    decl = branch.repo / "docs/grove/deliveries/feature.json"
+    assert decl.exists()
+    sha1 = commit_all(branch, "close W-001")
+
+    d = delivery.verify_delivery(root, "feature", "main")
+    assert d["errors"] == [] and d["checked"] == sha1
+
+    obs = claims.list_claims(root)["W-001"]["observation"]
+    assert obs == "closed on branch, awaiting integration"
+
+    close.record_delivery(branch, "W-002")  # still proposed
+    commit_all(branch, "declare W-002 too")
+    d2 = delivery.verify_delivery(root, "feature", "main")
+    assert d2["errors"] == ["W-002: proposed work is not archived"]
+
+    git(wt, "reset", "-q", "--hard", sha1)  # drop the bad declaration before integrating
+    d3 = delivery.verify_delivery(root, "feature", "main")
+    assert d3["errors"] == [] and d3["checked"] == sha1  # repair verified before integrating
+
+    git(root.repo, "merge", "-q", "--no-edit", "feature")
+    assert claims.list_claims(root)["W-001"]["observation"] == "integrated"
+
+    released = claims.release(branch, ["W-001"])
+    assert released == ["W-001"]
+    assert claims.load_claims(root.repo)["claims"] == {}

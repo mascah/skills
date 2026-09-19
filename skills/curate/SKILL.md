@@ -9,7 +9,7 @@ Read `../../references/knowledge-format.md` once.
 
 ## Steps
 
-1. Before the first write, enter a worktree branch: use the harness's native `EnterWorktree` when it exists, otherwise `git worktree add`, with the same detection `references/discipline.md` uses. With no work ID yet, name it for the topic (`worktree-shape-<slug>`).
+1. Before the first write, enter a worktree branch: use the harness's native `EnterWorktree` when it exists, otherwise `git worktree add`, with the same detection `references/discipline.md` uses. With no work ID yet, name it for the skill and topic (`worktree-curate-<slug>`).
 2. Run `grove lint`. Repair mechanically unambiguous errors; investigate relationship or meaning conflicts before changing them. List remaining warnings.
 3. Run `grove status`. Review focus, priority rationale, release membership, dependencies, batch recommendations, missing plans and Next actions. Dates signal possible drift; an old item is not automatically obsolete. For schema 1, upgrade the declaration and translate relationships from evidence before claiming readiness.
 4. For each accepted decision lint reports as unreferenced: read it, then `grove find` its subject. Propose one of: link it from the capability it governs, move it to history as superseded, or delete it if it never applied.
