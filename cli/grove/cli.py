@@ -8,6 +8,7 @@ from .claims import Owned, acquire, list_claims, release, render_claims
 from .close import close, render_receipt
 from .context import PHASES, context, render_context
 from .contract import export, load_contract, reconcile, render_receipt as render_reconcile, stale
+from .delivery import Inapplicable, render_delivery, verify_delivery
 from .find import find
 from .init import init, upgrade
 from .launch import LaunchBlocked, launch
@@ -42,6 +43,10 @@ def build_parser():
     f.add_argument("--regex", action="store_true")
     cl = sub.add_parser("close", help="close a done work unit into history")
     cl.add_argument("work")
+    vd = sub.add_parser("verify-delivery", help="validate a candidate's committed delivery declaration, read-only")
+    vd.add_argument("candidate", nargs="?", default="HEAD")
+    vd.add_argument("--base", default="main")
+    vd.add_argument("--json", action="store_true")
     cm = sub.add_parser("claim", help="acquire, release or take over work claims")
     cm.add_argument("work", nargs="+")
     cm_mode = cm.add_mutually_exclusive_group()
@@ -109,6 +114,14 @@ def main(argv=None):
         if args.cmd == "close":
             print(render_receipt(close(root, args.work)), end="")
             return 0
+        if args.cmd == "verify-delivery":
+            try:
+                d = verify_delivery(root, args.candidate, args.base)
+            except Inapplicable as exc:
+                print(f"grove: {exc}", file=sys.stderr)
+                return 2
+            print(json.dumps(d, indent=2) if args.json else render_delivery(d), end="" if not args.json else "\n")
+            return 1 if d["errors"] else 0
         if args.cmd == "claim":
             if args.release:
                 d = {wid: True for wid in release(root, args.work)}

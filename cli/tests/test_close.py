@@ -1,7 +1,8 @@
+import json
 import pytest
 from grove import close
 from grove.pages import GroveError
-from conftest import edit
+from conftest import edit, git_init
 
 W = "docs/grove/work/W-001-engage-range-readout.md"
 
@@ -15,6 +16,7 @@ def ready(root):
 
 
 def test_close_moves_and_reports(root):
+    git_init(root)
     ready(root)
     r = close.close(root, "W-001")
     assert r["id"] == "W-001" and r["updated"] == ["autopilot"] and r["unchanged"] == []
@@ -22,6 +24,22 @@ def test_close_moves_and_reports(root):
     assert (root.repo / r["moved_to"]).exists() and not (root.repo / W).exists()
     assert r["next"]["id"] == "W-003"  # W-002 has an unresolved blocking question
     assert "3 scenario tests pass" in r["evidence"]
+    assert r["declaration"].startswith("docs/grove/deliveries/") and r["declaration"].endswith(".json")
+    decl = json.loads((root.repo / r["declaration"]).read_text())
+    assert decl == {"schema": 1, "delivers": ["W-001"], "retains": []}
+
+
+def test_close_declaration_idempotent_and_detached_head_refused(root):
+    git_init(root)
+    ready(root)
+    close.close(root, "W-001")
+    branch = (root.repo / "docs/grove/deliveries").glob("*.json")
+    decl_path = next(branch)
+    before = decl_path.read_text()
+    # re-closing the same id is unreachable via close() (already archived), so exercise
+    # record_delivery directly to prove appends are idempotent.
+    close.record_delivery(root, "W-001")
+    assert decl_path.read_text() == before
 
 
 def test_refuses_not_done(root):
@@ -45,6 +63,7 @@ def test_refuses_stale_capability(root):
 
 
 def test_unchanged_list_satisfies_staleness(root):
+    git_init(root)
     edit(root, W, "status: active", "status: done")
     edit(root, W, "- [ ]", "- [x]")
     edit(root, W, "## Evidence\n", "## Evidence\nok\n")
@@ -70,3 +89,23 @@ def test_refuses_on_bad_date(root):
 def test_unknown_work(root):
     with pytest.raises(GroveError, match="no work unit W-404"):
         close.close(root, "W-404")
+
+
+def test_closure_errors_matches_close_without_moving(root):
+    with pytest.raises(GroveError) as exc:
+        close.close(root, "W-001")
+    work = root.get("W-001")
+    errors = close.closure_errors(root, work)
+    assert errors and errors[0] == str(exc.value)
+    assert (root.repo / W).exists()
+
+
+def test_record_delivery_refuses_detached_head(root):
+    git_init(root)
+    ready(root)
+    sha = close.git(root.repo, "rev-parse", "HEAD").strip()
+    close.git(root.repo, "checkout", "--detach", sha)
+    with pytest.raises(GroveError, match="detached HEAD"):
+        close.close(root, "W-001")
+    assert (root.repo / W).exists()  # refused before anything moved
+    assert not (root.repo / "docs/grove/history/work/W-001-engage-range-readout.md").exists()

@@ -4,6 +4,7 @@ import pytest
 
 from grove import cli, close, context, lint, status
 from grove.pages import GroveError
+from conftest import git_init
 
 
 def work(root, wid, *, kind="feature", size="bounded", extra="", body="", done=False):
@@ -118,6 +119,7 @@ def test_membership_dependency_cycle_rejected(root):
 
 
 def test_close_release_refuses_unclosed_member_and_unchecked_acceptance(root):
+    git_init(root)  # close() records a delivery declaration, which needs a real git branch
     p = work(root, "W-100", kind="release", size="large", extra="members: [W-000, W-101]\nunchanged: [autopilot]\n", body="## Evidence\nChecks passed.\n")
     work(root, "W-101")
     p.write_text(p.read_text().replace("status: proposed", "status: done"))
