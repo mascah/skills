@@ -21,7 +21,7 @@ Read `../../references/knowledge-format.md` once.
 ```text
 Branch worktree-W-NNN-slug at .claude/worktrees/W-NNN-slug: <one line on what it contains>. Options:
   Merge locally:   git -C <repo root> merge worktree-W-NNN-slug && git worktree remove .claude/worktrees/W-NNN-slug
-  Release the claim:  grove claim --release <ids>   (after the human integrates)
+  Release the claim:  grove claim --take <ids> && grove claim --release <ids>   (from the repo root, after the merge; the worktree's token is gone)
   Open a PR:       git push -u origin worktree-W-NNN-slug && gh pr create --fill   (only when a remote exists)
   Keep the branch: nothing to do; resume with EnterWorktree path=.claude/worktrees/W-NNN-slug
 If the merge conflicts, resolve or rebase, rerun grove lint and the checks, then retry.

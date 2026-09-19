@@ -167,7 +167,11 @@ def observe(root, claim_id, claim):
     knowledge_rel = root.rel(root.knowledge)
     history_path = f"{knowledge_rel}/history/work/{name}"
     closed_on_branch = _run(repo, "cat-file", "-e", f"{branch}:{history_path}").returncode == 0
-    if _run(repo, "cat-file", "-e", f"HEAD:{history_path}").returncode == 0:
+    # "integrated" means the claim branch merged into some OTHER checkout's HEAD; from the
+    # claiming checkout itself HEAD *is* the branch, so that test would always look merged.
+    current_branch = _git(repo, "rev-parse", "--abbrev-ref", "HEAD")
+    same_checkout = current_branch == branch or str(Path(claim["worktree"]).resolve()) == repo.resolve()
+    if not same_checkout and _run(repo, "cat-file", "-e", f"HEAD:{history_path}").returncode == 0:
         is_ancestor = _run(repo, "merge-base", "--is-ancestor", branch, "HEAD").returncode == 0
         return "integrated" if is_ancestor else "possibly squash-merged: verify and release with --take"
     if closed_on_branch:

@@ -150,6 +150,28 @@ def test_observe_closed_on_branch_awaiting_integration(three):
     assert claims.observe(main, "W-001", c) == "closed on branch, awaiting integration"
 
 
+def test_observe_from_owning_worktree_never_integrated(three):
+    """From the checkout that owns the claim, HEAD *is* the claim's branch, so the ancestor test
+    would always hold. That must read as 'closed on branch', not 'integrated', both before and
+    after main actually merges the branch -- this checkout has no way to see the merge landed
+    elsewhere. Only a checkout whose current branch differs from the claim's may report
+    'integrated'."""
+    main, a, b = three
+    c = claims.acquire(a, ["W-001"])["W-001"]
+    dest_dir = a.repo / "docs" / "grove" / "history" / "work"
+    dest_dir.mkdir(parents=True, exist_ok=True)
+    (a.repo / "docs" / "grove" / "work" / "W-001-engage-range-readout.md").rename(dest_dir / "W-001-engage-range-readout.md")
+    git(a.repo, "add", "-A")
+    git(a.repo, "commit", "-q", "-m", "close W-001")
+
+    assert claims.observe(a, "W-001", c) == "closed on branch, awaiting integration"
+    assert claims.observe(main, "W-001", c) == "closed on branch, awaiting integration"
+
+    git(main.repo, "merge", "a", "--no-edit", "-q")
+    assert claims.observe(main, "W-001", c) == "integrated"
+    assert claims.observe(a, "W-001", c) == "closed on branch, awaiting integration"
+
+
 # --- CLI ------------------------------------------------------------------------------------
 
 def test_cli_claim_conflict_exits_4(three, monkeypatch, capsys):
