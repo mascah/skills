@@ -166,7 +166,11 @@ def observe(root, claim_id, claim):
     name = _page_filename(root, claim_id)
     knowledge_rel = root.rel(root.knowledge)
     history_path = f"{knowledge_rel}/history/work/{name}"
-    if _run(repo, "cat-file", "-e", f"{branch}:{history_path}").returncode == 0:
+    closed_on_branch = _run(repo, "cat-file", "-e", f"{branch}:{history_path}").returncode == 0
+    if _run(repo, "cat-file", "-e", f"HEAD:{history_path}").returncode == 0:
+        is_ancestor = _run(repo, "merge-base", "--is-ancestor", branch, "HEAD").returncode == 0
+        return "integrated" if is_ancestor else "possibly squash-merged: verify and release with --take"
+    if closed_on_branch:
         return "closed on branch, awaiting integration"
     live_path = f"{knowledge_rel}/work/{name}"
     shown = _run(repo, "show", f"{branch}:{live_path}")

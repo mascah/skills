@@ -1,5 +1,6 @@
 import json
 import os
+import re
 import shutil
 import subprocess
 import threading
@@ -90,6 +91,17 @@ def test_concurrent_claim_same_id_one_owner(three):
     assert sum(v[0] == "ok" for v in outcomes.values()) == 1
     winner = next(v[1] for v in outcomes.values() if v[0] == "ok")
     assert claims.load_claims(main.repo)["claims"]["W-004"]["branch"] == winner
+
+
+# --- lock contention -------------------------------------------------------------------------
+
+def test_lock_held_refuses_naming_the_lock_path(root):
+    git_init(root)
+    lock = claims._grove_dir(root.repo) / "claims.lock"
+    lock.parent.mkdir(parents=True, exist_ok=True)
+    lock.touch()
+    with pytest.raises(GroveError, match=re.escape(str(lock))):
+        claims.acquire(root, ["W-001"])
 
 
 # --- malformed registry ------------------------------------------------------------------------

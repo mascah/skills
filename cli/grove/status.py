@@ -1,7 +1,17 @@
 """Compact work map using the same selection rules as closure."""
+from .claims import list_claims, owner_token
 from .lint import lint
-from .pages import first_line, section
+from .pages import GroveError, first_line, section
 from .work import WorkIndex, closed, outcome, refs
+
+
+def _claims(root):
+    # No git repo, or nothing ever claimed: same as no registry. A malformed registry is
+    # `grove claims`'s problem to report, not status's to crash on.
+    try:
+        return list_claims(root)
+    except GroveError:
+        return {}
 
 
 def status(root):
@@ -13,12 +23,25 @@ def status(root):
     history = sorted((p for p in index.work.values() if p.in_history),
                      key=lambda p: (p.fm.get("updated") or "", p.basename), reverse=True)[:3]
     errors, warnings = lint(root)
-    eligible = [w for w in work if w["status"] in ("active", "proposed") and w["readiness"] != "blocked"]
+    claims = _claims(root)
+    this_owner = owner_token(root.repo) if claims else None
+
+    def claim_of(wid):
+        c = claims.get(wid)
+        return {**c, "mine": c["owner"] == this_owner} if c else None
+
+    for w in work:
+        w["claim"] = claim_of(w["id"])
+    claimable = [w for w in work if w["status"] in ("active", "proposed") and w["readiness"] != "blocked"]
+    eligible = [w for w in claimable if not (w["claim"] and not w["claim"]["mine"])]
+    foreign_claimed = next((w for w in claimable if w["claim"] and not w["claim"]["mine"]), None)
     groups = []
     for w in work:
         if w["kind"] != "release" or w["status"] not in ("active", "proposed"):
             continue
         members = [index.summary(index.work[wid]) for wid in w["members"] if wid in index.work]
+        for m in members:
+            m["claim"] = claim_of(m["id"])
         groups.append({**w, "children": members, "closed": sum(closed(index.work.get(wid)) for wid in w["members"]),
                        "total": len(w["members"])})
     batches = {}
@@ -29,6 +52,8 @@ def status(root):
         "project": root.project, "pitch": first_line(section(brief.body, "Pitch")) if brief else "",
         "constraints": section(brief.body, "Constraints") if brief else "", "focus": index.focus,
         "recommendation": eligible[0] if eligible and not errors else None,
+        "coordinate": f"resume or coordinate: claimed on {foreign_claimed['claim']['branch']}" if foreign_claimed and not errors else None,
+        "claims": [{"id": wid, **c} for wid, c in claims.items()],
         "active": [w for w in work if w["status"] == "active"],
         "proposed": [w for w in work if w["status"] == "proposed"],
         "groups": groups, "batches": batches,
@@ -51,6 +76,9 @@ def _lines(w, indent=""):
         lines.append(f"{indent}  blocked: {'; '.join(w['blockers'])}")
     elif w["preparation"] and w["readiness"] != "closed":
         lines.append(f"{indent}  prepare: {'; '.join(w['preparation'])}")
+    if w["claim"]:
+        c = w["claim"]
+        lines.append(f"{indent}  claimed on {c['branch']} ({c['worktree']}) · {c['observation']}")
     return lines
 
 
@@ -62,6 +90,8 @@ def render_status(d):
                 w["selection_reason"]]
     else:
         out.append("Fix lint errors before selecting work." if d["lint"]["errors"] else "No eligible work; resolve blockers or shape the next outcome.")
+    if d["coordinate"]:
+        out.append(d["coordinate"])
     if d["focus"]:
         out.append(f"Focus: {d['focus']}")
     out += ["", "## Active"]

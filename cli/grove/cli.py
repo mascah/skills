@@ -44,8 +44,9 @@ def build_parser():
     cl.add_argument("work")
     cm = sub.add_parser("claim", help="acquire, release or take over work claims")
     cm.add_argument("work", nargs="+")
-    cm.add_argument("--release", action="store_true", help="release claims owned by this checkout")
-    cm.add_argument("--take", action="store_true", help="re-acquire regardless of current owner")
+    cm_mode = cm.add_mutually_exclusive_group()
+    cm_mode.add_argument("--release", action="store_true", help="release claims owned by this checkout")
+    cm_mode.add_argument("--take", action="store_true", help="re-acquire regardless of current owner")
     cm.add_argument("--json", action="store_true")
     cs = sub.add_parser("claims", help="list claims with branch/worktree observations")
     cs.add_argument("--json", action="store_true")
@@ -110,8 +111,6 @@ def main(argv=None):
             return 0
         if args.cmd == "claim":
             if args.release:
-                if args.take:
-                    raise GroveError("--release and --take are mutually exclusive")
                 d = {wid: True for wid in release(root, args.work)}
                 verb = "released"
             else:
@@ -160,7 +159,7 @@ def main(argv=None):
             return EXIT[r["outcome"]]
     except Owned as exc:
         print(f"grove: {exc}", file=sys.stderr)
-        return 4
+        return EXIT["owned"]
     except GroveError as exc:
         print(f"grove: {exc}", file=sys.stderr)
         return 1
