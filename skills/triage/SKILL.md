@@ -5,10 +5,11 @@ description: Use when classifying a request, investigating a bug or ambiguity, c
 
 # Prepare the next useful action
 
-Read [GitHub coordination and readiness](references/github.md),
-[artifact ownership](references/artifacts.md), and
-[execution](references/execution.md). Accept local requests, supplied
-issue bodies or accessible tracker references without requiring setup.
+Read [common discipline](references/discipline.md). Accept local requests, supplied
+issue bodies or accessible tracker references without requiring setup. For tracker
+requests or runnable assignments read [scope/readiness](references/assignments.md);
+a local investigation-only request needs no assignment manual.
+For GitHub operations read [the concrete commands](references/github.md).
 
 Read full scope, relevant discussion, prior triage findings and current
 coordination. Search code for existing implementation and durable docs for prior
@@ -18,8 +19,8 @@ may need a concrete input rather than immediate rejection.
 
 Classify what the request needs: investigation, shaping, a runnable implementation
 unit, human input, or rejection. Use `shaping` only for
-consequential ambiguity, honoring settled facts. Check every readiness condition
-in the shared contract, including revision accessibility, integrated blockers,
+consequential ambiguity, honoring settled facts. Before declaring an implementation unit ready, check every condition
+in the shared scope/readiness contract, including revision accessibility, integrated blockers,
 caller ownership and parent/child overlap. A maintainer's label request does not
 make missing prerequisites true; report the specific gap. Research/decision
 work does not become an implementation assignment just because it is well written.

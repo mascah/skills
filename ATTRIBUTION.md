@@ -18,7 +18,7 @@ fork or a runtime dependency on either source.
 - Repository history at `045a78f`: retained the shared-index isolation rationale
   in [an ADR](docs/adr/isolated-writing-sessions.md), scope/mandate boundaries in
   [workflow](references/workflow.md), and trustworthy completion, integrated
-  interaction checks and recovery lessons in [execution](references/execution.md).
+  interaction checks and recovery lessons in [execution](references/implementation.md).
   The former CLI, schema, work records, controller loop and adapters are retired.
   Old source and evidence remain available through git history rather than an
   archive in the current distribution.

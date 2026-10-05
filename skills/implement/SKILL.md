@@ -5,18 +5,15 @@ description: Use when delivering a direct request, supplied issue, local spec, o
 
 # Deliver the selected unit
 
-Read [execution and handoff](references/execution.md) and
-[mandate](references/workflow.md). Adopt project instructions and optional
-workflow configuration. Accept a direct request, complete issue body, local
-spec, or named slice; small work needs no spec, tickets, separate plan or setup.
+Read [common discipline](references/discipline.md),
+[selected-scope delivery](references/implementation.md), and
+[verification](references/verification.md). Accept a direct request, supplied
+issue body, local spec or slice without required setup, tickets or extra artifacts.
 
-For tracker inputs read [GitHub scope and readiness](references/github.md).
-Fetch body/discussion and resolve the canonical pointer at its identified
-revision, or use complete supplied issue-only content. Recheck integrated
-prerequisites, assignment ownership and parent/child overlap before starting.
-If issue-only content cannot be fetched, request that exact missing content;
-git cannot recover it. External status changes follow caller policy and
-distinguish implementation completion from merge/integration.
+For tracker assignments, read [scope and readiness](references/assignments.md).
+Use the project's tracker interface to fetch the body/discussion and resolve its
+canonical pointer, or use complete supplied issue-only content. If delegation or
+worker roles apply, read [caller/worker handoff](references/delegation.md).
 
 1. Identify scope, constraints and observable acceptance. Inspect the checkout,
    relevant code and decisions. Read Delivery if present. Resolve scope/revision

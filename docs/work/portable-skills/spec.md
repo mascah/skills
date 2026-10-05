@@ -36,3 +36,25 @@ scope; use temporary projects and no global installation.
 ## Verification
 
 See [the verification record](../../../tests/results.md#standalone-portability-correction).
+
+## Focused guidance and workflow SSOT follow-up
+
+The next checkpoint preserves references/workflow.md as the complete maintained
+entry point: routes, artifact ownership, coordination, delegation, verification
+and authoring, with links to each single rule/procedure owner. It is a navigation
+and explanatory guide, not a second edited copy of all rules. Root focused
+references own reusable obligations; skill bodies own activity-specific methods.
+Generated leaf copies remain the standalone distribution form.
+
+Retire catch-all artifacts/execution references after moving useful instructions
+to focused owners or owning skills. Setup, domain modeling and interface design
+must not load unrelated assignment/delegation/implementation manuals. Tracker and
+worker contracts load conditionally. Keep acceptance/readiness authority, inline
+Delivery/extraction, abandonment, preservation and truthful evidence intact.
+
+Verify complete guide links and every standalone folder, compare bundled size
+against 03aa6b3, inspect the old/new obligation mapping, and exercise representative
+isolated authoring, tracker, worker and implementation scenarios. Record results
+in tests/results.md. Work on refactor/focused-workflow; no external publication.
+
+Focused-guidance verification: [results](../../../tests/results.md#focused-guidance-and-workflow-ssot).

@@ -5,9 +5,7 @@ description: Use when an uncertain idea needs investigation, evidence, or a cros
 
 # Find the useful direction
 
-Read [routes and mandate](references/workflow.md) and
-[artifact ownership](references/artifacts.md). Read
-[execution](references/execution.md) before writing. Establish the question
+Read [common discipline](references/discipline.md). Establish the question
 or destination, intended value, constraints, known facts, unresolved questions
 and dependencies. Reuse prior findings and decisions, checking current evidence
 where it matters. A destination can be an answer or reason to stop, not a build.

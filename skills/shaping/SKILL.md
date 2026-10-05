@@ -5,9 +5,7 @@ description: Use when an idea or change needs clearer outcomes, alternatives, co
 
 # Shape the intended change
 
-Read [routes and mandate](references/workflow.md) and
-[artifact ownership](references/artifacts.md). Read
-[execution](references/execution.md) before writing. Use the existing
+Read [common discipline](references/discipline.md). Use the existing
 conversation, spec, code, domain language and prior decisions as the starting
 point; do not restart an interview just because this is a new session.
 
@@ -24,6 +22,7 @@ and recovery where relevant. Resolve ambiguous terms with
 Preserve established vocabulary and decisions unless new evidence justifies
 revisiting them. Ask for changed intent when that affects the mandate.
 
+If saving scope, read [Specification and Delivery](references/specification.md).
 Finish with intended behavior, constraints, acceptance, selected alternatives,
 consequential decisions, open questions and out-of-scope work. An already clear
 idea may need only a short synthesis. When persistence is useful, use
@@ -31,4 +30,4 @@ idea may need only a short synthesis. When persistence is useful, use
 interview. When evidence undermines the premise, answer, defer or abandon with
 the reason. Shaping alone authorizes neither implementation nor publication.
 
-Named helpers are optional. Without `domain-modeling`, resolve ambiguous terms against concrete examples and record meaningful definitions. Without `codebase-design`, compare caller-facing alternatives and costs. Without `to-spec`, save settled intent directly using the bundled artifact ownership guidance.
+Named helpers are optional. Without `domain-modeling`, resolve ambiguous terms against concrete examples and record meaningful definitions. Without `codebase-design`, compare caller-facing alternatives and costs. Without `to-spec`, save settled intent directly using the bundled Specification and Delivery guidance.

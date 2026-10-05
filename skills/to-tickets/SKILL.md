@@ -5,11 +5,11 @@ description: Use when independently assignable deliverables from a spec or agree
 
 # Assign useful deliverables
 
-Read [artifact ownership](references/artifacts.md),
-[GitHub contract](references/github.md), and
-[mandate](references/workflow.md). Read
-[execution](references/execution.md) for local writes. Use the canonical
-spec and Delivery; setup and tickets are not prerequisites for implementation.
+Read [common discipline](references/discipline.md),
+[Specification and Delivery](references/specification.md), and
+[tracker scope/readiness](references/assignments.md).
+For GitHub operations read [the concrete commands](references/github.md);
+local drafts need no tracker tools. Setup/tickets are not implementation prerequisites.
 
 Reuse named slices and real structural dependencies. Introduce slices only
 when independent assignment warrants them, linking each to acceptance. Prefer
@@ -36,4 +36,4 @@ Do not modify unrelated parents. Return the canonical slice mapping, structural
 edges, draft or real ticket links, operations actually performed and unavailable
 inputs; ordinary tracker progress requires no local document changes.
 
-The `triage` helper is optional. Without it, apply the readiness checklist in the bundled GitHub reference directly; do not dispatch overlapping parent/child assignments.
+The `triage` helper is optional. Without it, apply the readiness checklist in the bundled tracker scope/readiness reference directly; do not dispatch overlapping parent/child assignments.

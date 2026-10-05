@@ -157,7 +157,7 @@ must validate individual folders, not only the complete plugin.
 | `research` | Gather primary-source evidence and preserve findings where useful | Stage 4 |
 | `prototype` | Answer a bounded design question with clearly disposable artifacts | Stage 4 |
 
-Shared files: `references/workflow.md` for routes and mandate, `references/artifacts.md` for ownership and formats, and `references/execution.md` for verification and delegation obligations. Add `references/github.md` in stage 3 for concrete tracker operations. These are small instructions and examples, not the old scaffold templates or a new runtime.
+Current maintained workflow: [the canonical guide](../../../references/workflow.md) links focused single-owner rules and all activity procedures. The portability/focused-guidance follow-up supersedes the original catch-all artifact/execution references; installed skills bundle only relevant leaf guidance. The Delivery stages below retain the original implementation sequence as history, not a second current workflow policy.
 
 Skills can be invoked independently. Supporting references are loaded when relevant; there is no global trigger that runs the whole suite for every task. Setup preserves existing AGENTS/CLAUDE instructions and provides a discoverable pointer for the harnesses actually in use. Re-running setup updates its own material without duplicating it or overwriting unrelated instructions.
 

@@ -117,9 +117,10 @@ and stop with evidence that it should be abandoned. Architecture investigation
 compares observed costs and routes selected improvements into `shaping`; it
 does not automatically refactor a project.
 
-The shared [routes](references/workflow.md), [artifact owners](references/artifacts.md)
-and [execution contract](references/execution.md) explain persistence, authority,
-verification and direct/delegated handoffs. [The refactor spec](docs/work/mascah-skills-refactor/spec.md)
+[The canonical workflow guide](references/workflow.md) explains the complete
+system and links to each single maintained rule/procedure owner. Skills carry
+only relevant focused references, with conditional loading for tracker/delegation
+work; the guide itself is not copied into their installations. [The refactor spec](docs/work/mascah-skills-refactor/spec.md)
 records the agreed design; current files and checks establish what has shipped.
 [Attribution](ATTRIBUTION.md) identifies adapted sources.
 
@@ -134,7 +135,10 @@ python3 __init__.py
 git diff --check
 ```
 
-Edit shared guidance only in root `references/`, then run
+The complete workflow remains in `references/workflow.md`, linking focused
+rule owners and activity procedures. Edit a reusable rule only in its owning
+root reference, or activity-specific guidance in its SKILL.md. The full guide
+is not bundled into individual skills. Then run
 `python3 scripts/bundle_references.py` and commit its generated copies under
 `skills/<name>/references/` together with the source. Those directories are
 generated-only; skill-specific authored support can live elsewhere inside its

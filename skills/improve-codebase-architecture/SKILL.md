@@ -5,10 +5,9 @@ description: Use when observed architectural friction or repeated changes warran
 
 # Investigate costly friction
 
-Read project vocabulary, relevant ADRs and the affected code/history. Use
-`codebase-design` for useful interface/cohesion
-principles and [workflow](references/workflow.md) for mandate. Read
-[execution](references/execution.md) before writing. Start with the user's
+Read project vocabulary, relevant ADRs and affected code/history. Use the optional
+`codebase-design` helper for interface/cohesion principles and follow
+[common discipline](references/discipline.md). Start with the user's
 pain point or evidence from changing areas, not an exhaustive hunt for refactors.
 
 Trace real caller behavior and change paths. Identify where a concept requires

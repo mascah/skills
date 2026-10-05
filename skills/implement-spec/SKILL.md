@@ -5,11 +5,12 @@ description: Use when delivering an entire local specification across its slices
 
 # Complete the specified outcome
 
-Read the entire spec, inline Delivery or its linked plan, relevant project
-instructions and prior decisions. Use [execution](references/execution.md)
-for implementation/evidence, [artifact ownership](references/artifacts.md)
-for scope changes, and [GitHub readiness](references/github.md) only when
-tracker assignments apply. A local spec needs no tickets, credentials or setup.
+Read the entire spec and inline Delivery or linked plan. Follow
+[common discipline](references/discipline.md),
+[selected-scope delivery](references/implementation.md), and
+[verification](references/verification.md). Local work needs no tickets or setup.
+For tracker assignments, read [scope and readiness](references/assignments.md).
+For delegated work, read [caller/worker handoff](references/delegation.md).
 
 Identify all acceptance obligations and their delivery slices. Revalidate
 dependencies and checkout observations. Choose an integration branch/workspace

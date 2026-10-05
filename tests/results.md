@@ -199,3 +199,75 @@ no generation step. The root reference architecture in the earlier refactor
 spec is superseded by the linked portability follow-up. Existing live runtime
 limits remain: no Hermes delegation, browser integration or GitHub publication
 was exercised by this correction.
+
+## Focused guidance and workflow SSOT
+
+Follow-up branch refactor/focused-workflow, baseline 03aa6b3, 2026-10-05.
+The preceding portability commit solved standalone packaging but only partially
+reduced broad context. The current correction restores the complete canonical
+workflow guide, linking every activity and shared rule owner; it does not ship
+that full maintenance guide into every skill. Scope-specific procedures stay in
+their SKILL.md, reusable obligations in focused root leaf references, and generated
+copies remain checked distribution artifacts.
+
+Rule transfer: mandate/preservation/truthfulness -> discipline; intended scope,
+Delivery/extraction/history -> specification; tracker authority/revisions/readiness
+and operational state -> assignments; caller/worker contract -> delegation;
+prerequisites/resume/completion -> implementation; proportionate tests/interaction
+checks/evidence -> verification; provider-specific operations -> github. The
+catch-all artifacts/execution files are retired. Setup, domain modeling and
+interface design each bundle only 181 words of common discipline. Tracker and
+worker references load under explicit conditions, including local-only triage.
+
+Bundled leaf payload is 51,720 bytes in 32 copies versus 140,187 bytes/40 copies
+at 03aa6b3 (63.1% smaller). This is installed support size, not a measured token
+saving or a claim that every conditionally bundled file is loaded. The full guide
+is deliberately retained for understanding and maintenance at repository level.
+
+Independent static review compared old obligations to new owners and identified
+an incorrect fallback pointer and generic partial-write retry guidance that became
+unreachable for implementation-only installs. Both were corrected: fallback
+points to assignments, inspect-state-before-retry belongs to common discipline.
+Its minor guide/inspection/conditional-triage findings were also addressed.
+No blocking finding remains in that obligation audit; it is not runtime proof.
+
+Final candidate distribution validator: fifteen skills, zero errors. All 21
+structural/isolated-copy/drift tests passed on Python 3.12 and 3.13; Hermes inventory,
+Claude skill component validation and diff checks passed. Actual npx skills 1.5.18
+reinstalled all fifteen from the local candidate into a disposable Codex project
+in copy mode; every installed folder passed isolated validation and none carried
+the full workflow guide. Installer log: /private/tmp/mascah-focused-npx/install.log.
+
+Fresh-context isolated evaluator used only copied named skills/local leaf support
+and synthetic fixture inputs. Setup twice preserved nondefault docs/specs paths,
+user workflow notes, one AGENTS block and byte-identical delegating CLAUDE, creating
+no extra scaffold. Domain modeling resolved Customer/Login in glossary without
+forcing ADR/spec/implementation. To-spec kept behavioral acceptance in the spec
+and eight-stage rollout in one linked plan; seven links/anchors resolved. Triage
+rejected missing revision access (git show exit 128) and closed-rejected prerequisite
+as runnable implementation, making no tracker write/ready claim. Assigned worker
+reproduced normalize(' A ') failure then passed three tests after lowercase fix,
+with diff review and caller-owned integration/retries in its report.
+
+Read manifest confirms setup/domain loaded only common discipline; to-spec added
+Specification; tracker triage added Assignments but not GitHub operations; worker
+implementation added Delegation and did not load tracker guidance. It needed no
+full guide, source suite or installed helper. Raw artifacts/evidence:
+/private/tmp/focused-behavior-fixture-hy1ebgfk/evaluation/. The first fixture test
+used login-shell initialization and emitted a pyenv warning; subsequent commands
+used login:false. No personal configuration was intentionally read/changed, but
+that first shell's initialization cannot be called perfectly config-free.
+
+The evaluator's local-triage follow-up had prior assignment guidance in context,
+so a separate fresh-context trial verified the condition independently. It loaded
+only triage and common discipline, executed whitespace normalization against its
+documented behavior, and ended investigation without an assignment manual,
+spec/ticket/workflow artifact or implementation. Report:
+/private/tmp/triage-local-normalize-fke0jm25/report.md. Parent inspected reports
+and reran worker checks and fresh local triage function checks successfully.
+
+Evidence establishes synthetic standalone use and local-source installation,
+not GitHub published-source installation, external tracker access, live Hermes
+CLI delegation or every future interpretation. Shared rules moved rather than
+vanished; the complete linked workflow guide remains the maintained entry point.
+The focused-guidance commit contains this tested state.

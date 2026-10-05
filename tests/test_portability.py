@@ -51,7 +51,7 @@ class PortableSkills(unittest.TestCase):
     def test_generated_copy_drift_is_rejected(self):
         package = self.root / 'plugin'
         shutil.copytree(SOURCE, package, ignore=shutil.ignore_patterns('.git', '.claude', '__pycache__'))
-        reference = package / 'skills/implement/references/execution.md'
+        reference = package / 'skills/implement/references/discipline.md'
         self.assertTrue(reference.is_file(), 'bundled reference missing')
         reference.write_text(reference.read_text() + '\nStale manual edit.\n')
         result = subprocess.run([sys.executable, str(package / 'scripts/validate.py')],

@@ -5,7 +5,8 @@ description: Use when reviewing a branch, PR, or working diff for requirement ga
 
 # Review the actual change
 
-Read [execution and evidence](references/execution.md). Resolve the review
+Read [common discipline](references/discipline.md) and
+[verification](references/verification.md). Resolve the review
 base from the caller or known branch baseline; state it. Include relevant staged
 and unstaged changes when reviewing work in progress. Check that refs resolve
 and inspect the complete selected diff and relevant surrounding code. An empty

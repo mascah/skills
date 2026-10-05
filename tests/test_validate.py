@@ -43,8 +43,8 @@ class DistributionValidation(unittest.TestCase):
         self.assertEqual(smoke.returncode, 0, smoke.stderr)
 
     def test_missing_shared_reference_rejected(self):
-        (self.root / "references/execution.md").unlink()
-        self.assert_rejected("references/execution.md")
+        (self.root / "references/discipline.md").unlink()
+        self.assert_rejected("references/discipline.md")
 
     def test_plugin_inventory_requires_all_published_skills(self):
         shutil.rmtree(self.root / "skills/tdd")
@@ -96,7 +96,7 @@ class DistributionValidation(unittest.TestCase):
 
     def test_broken_anchor_rejected(self):
         path = self.root / "skills/shaping/SKILL.md"
-        path.write_text(path.read_text() + "\n[missing](references/workflow.md#absent)\n")
+        path.write_text(path.read_text() + "\n[missing](references/discipline.md#absent)\n")
         self.assert_rejected("anchor")
 
     def test_escape_from_package_rejected(self):

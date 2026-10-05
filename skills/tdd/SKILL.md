@@ -5,8 +5,9 @@ description: Use when implementing behavioral changes test-first, reproducing bu
 
 # Test behavior first
 
-Read project check conventions, vocabulary and relevant acceptance. Apply
-[verification obligations](references/execution.md). Select the highest
+Read project check conventions, vocabulary and acceptance. Apply
+[common discipline](references/discipline.md) and
+[verification](references/verification.md). Select the highest
 useful observable interface that catches the behavior; adopt existing test
 patterns. Routine seam choices need no additional approval when scope is clear.
 For unresolved interface design, consult `codebase-design`.

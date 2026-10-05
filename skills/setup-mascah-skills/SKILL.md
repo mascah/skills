@@ -5,9 +5,8 @@ description: Use when configuring or updating a project's paths, tracker labels,
 
 # Adopt the project
 
-Setup is optional. Discover existing conventions before choosing defaults. Read
-[workflow](references/workflow.md), [artifact ownership](references/artifacts.md),
-and [writing discipline](references/execution.md).
+Setup is optional. Discover existing conventions and read
+[common discipline](references/discipline.md) before choosing defaults.
 
 1. Inspect agent instructions, documentation locations, glossary/context maps,
    ADRs, git remotes and project check commands. Read any existing workflow file.
@@ -18,12 +17,14 @@ and [writing discipline](references/execution.md).
    mapping if applicable, project checks, isolation/commit rules and caller
    executor policy. Record only operational preferences that are actually known;
    no credentials, model routing invented by the skill, or required empty files.
+   Infer existing locations first; otherwise use docs/work/<effort>/ for work,
+   GLOSSARY.md for terms and docs/adr/ for consequential decisions, created lazily.
 3. Ask only when a missing preference changes behavior and cannot be inferred.
    Without a selected tracker, retain local-only operation. Use familiar triage
    roles or existing equivalents when applicable: `needs-triage`, `needs-info`,
    `ready-for-agent`, `ready-for-human`, `wontfix`.
    For GitHub, record the explicit repository and the role-to-label mapping,
-   following [the tracker contract](references/github.md). Setup records
+   adopting the existing coordination convention. Setup records
    preferences; it does not create labels or change readiness remotely.
 4. Make the workflow discoverable from instructions used by the project's
    harnesses. Preserve unrelated AGENTS/CLAUDE content. If CLAUDE already delegates

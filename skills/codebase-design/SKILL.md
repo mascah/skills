@@ -5,9 +5,8 @@ description: Use when designing an interface, improving testability, or evaluati
 
 # Design for callers and maintainers
 
-Read relevant project language, decisions and changing code. Use
-[artifact ownership](references/artifacts.md) and
-[execution](references/execution.md) for writes. Prefer the project's
+Read relevant project language, decisions and changing code. Follow
+[common discipline](references/discipline.md). Prefer the project's
 vocabulary; these supporting terms explain design rather than replacing it:
 
 | Term | Meaning |
@@ -36,5 +35,6 @@ costly external dependency; justify it from observed needs.
 
 Choose the smallest cohesive design that serves current requirements. Preserve
 existing decisions unless evidence warrants reconsideration. Record
-consequential choices in the spec or an ADR; propose scope changes through
-`shaping` rather than performing unsolicited architecture work.
+consequential choices in the spec or an ADR. Clarify consequential scope changes
+with the caller; an installed `shaping` helper is optional. Investigation alone
+does not authorize an unsolicited architecture change.

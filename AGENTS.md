@@ -1,6 +1,6 @@
 # mascah-skills
 
-This repository ships a personal engineering skill suite. The agreed design and all four delivery stages live in [the refactor specification](docs/work/mascah-skills-refactor/spec.md); current files and [verification results](tests/results.md) establish delivered behavior. The independent skills share [workflow](references/workflow.md), [artifact ownership](references/artifacts.md), and [execution](references/execution.md) contracts.
+This repository ships a personal engineering skill suite. The agreed design and all four delivery stages live in [the refactor specification](docs/work/mascah-skills-refactor/spec.md); current files and [verification results](tests/results.md) establish delivered behavior. The [canonical workflow guide](references/workflow.md) links the single owners of shared rules and skill procedures. Installed skills bundle only their relevant focused references.
 
 ## Working here
 
