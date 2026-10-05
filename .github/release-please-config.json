@@ -20,7 +20,9 @@
           "path": "plugin.yaml",
           "jsonpath": "$.version"
         }
-      ]
+      ],
+      "version-file": ".github/version.txt"
     }
-  }
+  },
+  "last-release-sha": "acb58f24092e93bce7627542c0cbc76b2ce3db44"
 }

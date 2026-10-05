@@ -128,7 +128,7 @@ def validate(root, standalone=False):
         fail(f'reference drift: {exc}')
 
     try:
-        version = (root / "version.txt").read_text().strip()
+        version = (root / ".github/version.txt").read_text().strip()
         if not re.fullmatch(r"\d+\.\d+\.\d+(?:-[a-zA-Z0-9.-]+)?", version):
             fail("invalid version.txt")
         manifests = [load(".claude-plugin/plugin.json"), load(".codex-plugin/plugin.json"),
@@ -154,9 +154,9 @@ def validate(root, standalone=False):
             expected = "./" if file.startswith(".claude") else {"source": "local", "path": "./"}
             if entry.get("source") != expected:
                 fail(f"{file}: plugin source must resolve to package root")
-        if load(".release-please-manifest.json").get(".") != version:
+        if load(".github/.release-please-manifest.json").get(".") != version:
             fail("release manifest version differs from version.txt")
-        extras = load("release-please-config.json")["packages"]["."]["extra-files"]
+        extras = load(".github/release-please-config.json")["packages"]["."]["extra-files"]
         version_targets = {".claude-plugin/plugin.json", ".codex-plugin/plugin.json", "plugin.yaml"}
         seen_targets = set()
         for entry in extras:

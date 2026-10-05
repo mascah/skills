@@ -71,12 +71,12 @@ class DistributionValidation(unittest.TestCase):
         self.assert_rejected("mascah-skills")
 
     def test_release_target_must_exist(self):
-        self.edit_json("release-please-config.json", lambda d:
+        self.edit_json(".github/release-please-config.json", lambda d:
                        d["packages"]["."]["extra-files"].append("cli/grove/__init__.py"))
         self.assert_rejected("release target")
 
     def test_release_updater_must_target_version_field(self):
-        self.edit_json("release-please-config.json", lambda d:
+        self.edit_json(".github/release-please-config.json", lambda d:
                        d["packages"]["."]["extra-files"][0].update(jsonpath="$.absent"))
         self.assert_rejected("release updater")
 

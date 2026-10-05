@@ -155,6 +155,16 @@ prove agent behavior, live tracker access or Hermes delegation.
 
 Write on an isolated branch/worktree and use Conventional Commits. CI and
 lefthook run structural/test/registration checks. Release Please opens the
-release PR after integration to main; its simple release updates `version.txt`,
-the release manifest and Claude/Codex/Hermes version fields. Review that PR
+release PR after integration to main; its simple release updates `.github/version.txt`,
+the `.github/.release-please-manifest.json` and Claude/Codex/Hermes version fields.
+Configuration lives in `.github/release-please-config.json`; package/updater paths
+still resolve from the repository root. Review that PR
 before releasing. This implementation does not publish or tag a release.
+
+The personal suite version baseline is 0.1.0. The existing changelog records older
+Grove releases. For this reset, `last-release-sha` in the Release Please config
+anchors commit collection at the last integrated suite revision. Remove that
+temporary field after the first successful new release PR is merged, restoring
+automatic release-boundary discovery. Old remote tags/releases are not removed by
+changing version files or force-pushing a branch. See the
+[Release Please reset option](https://github.com/googleapis/release-please/blob/main/docs/manifest-releaser.md).

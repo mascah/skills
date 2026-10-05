@@ -271,3 +271,22 @@ not GitHub published-source installation, external tracker access, live Hermes
 CLI delegation or every future interpretation. Shared rules moved rather than
 vanished; the complete linked workflow guide remains the maintained entry point.
 The focused-guidance commit contains this tested state.
+
+## Release tooling relocation and baseline reset
+
+Branch chore/release-baseline from acb58f2. User requested resetting the personal
+suite to 0.1 and had already force-pushed the desired remote branch history.
+Moved config, manifest and version file to .github/; workflow inputs, simple
+strategy version-file and validation fixtures follow the new paths. Claude,
+Codex, Hermes and manifest versions all agree on 0.1.0. Package/updater paths
+remain repository-root-relative. Historical changelog and tags are preserved.
+Temporary last-release-sha pins commit collection at acb58f2 so abandoned release
+PR history does not choose the starting boundary; README instructs removal after
+the first successful new release PR merge. This is configuration, not a release.
+
+Checks: distribution validator fifteen skills/zero errors; all 21 tests passed;
+Hermes registration and diff checks passed; workflow config/manifest and custom
+version-file resolved from the repository root. Primary Release Please action,
+manifest config and simple strategy source verified custom paths/reset options.
+No remote force-push, tag/release mutation, GitHub Action run or publication was
+performed by this task. Final commit contains this tested candidate.
