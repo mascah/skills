@@ -1,87 +1,125 @@
-# grove
+# mascah-skills
 
-Repo-local knowledge, work planning, and implementation guidance for coding agents. Six skills develop intent, prepare plans, execute within delegated constraints, and reconcile what changed. A small CLI makes the work map and structural checks deterministic.
-
-## What's next?
-
-From a configured project:
-
-```sh
-grove status
-grove batch W-002 W-003
-grove context --work W-002 --phase plan
-```
-
-Status shows focus, release membership, dates, blockers, preparation, the recommended next action and its reason, and items to consider together. Batch assesses any selected units for a shared implementation: internal order, external blockers, overlapping capability scope, and missing plans. Dependent items may execute sequentially in one implementation. The agent checks actual code ownership before parallel execution.
-
-This repo uses its own work map. The next executor work and suggested grouping live in `docs/grove/`, accessible through those commands. [External workflow patterns](docs/2026-09-15-external-workflow-patterns.md) explains what we adapted from Compound Engineering, harness engineering, and Symphony.
+A personal engineering skill suite for hobby projects. Shape useful changes,
+keep durable intent in git, and implement with meaningful verification. Skills
+are independently invocable; setup, specs, plans, tickets and delegation are
+optional when the work does not need them. No Grove CLI or upstream plugin is
+required.
 
 ## Install
 
-CLI first, for every harness:
-
-```sh
-uv tool install --editable ./cli
-```
+Install the whole plugin so shared `references/` ships with `skills/`. Copying
+one skill directory alone loses its supporting contracts.
 
 Claude Code:
 
 ```sh
 claude plugin marketplace add mascah/skills
-cd /path/to/your/project && claude plugin install grove@mascah --scope project
+claude plugin install mascah-skills@mascah --scope project
 ```
 
 Codex:
 
 ```sh
 codex plugin marketplace add mascah/skills
-codex plugin add grove@mascah
+codex plugin add mascah-skills@mascah
 ```
 
-Hermes Agent (the repo root is the plugin):
+Hermes (local checkout; create the parent plugins directory if needed):
 
 ```sh
-ln -s /path/to/this/repo ~/.hermes/plugins/grove && hermes plugins enable grove
+ln -s /path/to/this/repo ~/.hermes/plugins/mascah-skills
+hermes plugins enable mascah-skills
 ```
 
-After updating, refresh the installed plugin through the harness and start a new session so it loads the revised skills. An editable CLI install reads the updated code directly.
+Hermes registers `mascah-skills:<skill>` through the retained Python entry
+point. Runtime delegation and scheduling belong to the caller's configuration.
+Installation guidance follows [Claude's plugin docs](https://code.claude.com/docs/en/discover-plugins),
+[OpenAI's plugin packaging docs](https://developers.openai.com/plugins/build/plugins),
+and [Hermes's plugin docs](https://hermes-agent.nousresearch.com/docs/user-guide/features/plugins).
+Claude/Codex syntax was also checked against local CLI help on 2026-10-05.
+Personal installation is separate from repository validation.
 
-## Loop
+## Update or migrate from Grove
 
-1. `grove:setup` adopts the project.
-2. `grove:explore` thinks through an open idea with the human and writes only what they settle.
-3. `grove:shape` investigates, selects work, and records its specification and relationships.
-4. `grove:work W-NNN` prepares missing plans and implements. Several selected units can share one durable plan.
-5. `grove:close` verifies evidence, reconciles knowledge, and closes units in dependency order.
-6. A fresh session starts with `grove status`.
+Refresh the marketplace and reinstall under the new identity. Existing Grove
+project files are user-owned migration inputs: inspect them and preserve useful
+intent in the project's normal docs; this plugin does not delete them.
 
-Humans choose outcomes and constraints; agents research, plan, and execute within them. Readiness reports structural preparation, not permission or proof of a correct plan. Release acceptance can require actual human judgment after member implementation.
-
-Plans open with an execution decision: approach, reason, delegation, runtime and when to reassess. `/work` defaults to one agent, uses focused subagents for independent deliverables, and recommends a team when inspected ownership and coordination benefits justify it. Durable unattended execution is a separate choice. See the [execution defaults and header](references/planning.md#execution-decision).
-
-## CLI
-
-```text
-grove init
-grove upgrade
-grove lint
-grove status [--json]
-grove batch W-NNN [W-NNN ...] [--json]
-grove context --work W-NNN [--phase shape|plan|implement|debug|debrief] [--budget 6000] [--json]
-grove find <query> [--history] [--type <type>]
-grove close W-NNN
-```
-
-`batch` returns 2 for blockers, `context` returns 2 for required omissions or invalid relationships, and command/configuration errors return 1. JSON supports headless callers. There is no scheduler or execution driver in this release.
-
-## Existing projects
-
-The CLI reads schema 1 and 2. With the updated CLI/skills installed, run `grove upgrade` and shape/curate the work map: separate `members` from `depends_on`, set the brief's `focus`, preserve known dates, and assess plans. Upgrade changes only the schema declaration. Re-run `grove init` to refresh managed agent guidance.
-
-The [knowledge format](references/knowledge-format.md) defines fields; [planning](references/planning.md) covers shared plans, execution and interruption.
-
-## Develop
+Claude Code (use the scope of the previous installation):
 
 ```sh
-cd cli && uv venv && uv pip install -e '.[dev]' && uv run pytest -q
+claude plugin uninstall grove@mascah --scope project
+claude plugin marketplace update mascah
+claude plugin install mascah-skills@mascah --scope project
 ```
+
+For subsequent updates use `claude plugin update mascah-skills@mascah`.
+Codex:
+
+```sh
+codex plugin remove grove@mascah
+codex plugin marketplace upgrade mascah
+codex plugin add mascah-skills@mascah
+```
+
+For subsequent Codex refreshes, upgrade the marketplace and remove/add
+`mascah-skills@mascah` to reinstall its cached package. Hermes users disable the
+old plugin with `hermes plugins disable grove`, remove only their old Grove
+plugin link/install after inspection, and enable the new checkout link. Pulling
+updates into that checkout updates its files. Start a new harness session after
+updating. An old editable Grove CLI installation is independent and can be
+uninstalled separately if no project needs it.
+
+## Use
+
+Invoke skills using the harness's skill picker or namespaced skill command.
+For example in Claude Code, `/mascah-skills:shaping`; in Hermes,
+`skill_view("mascah-skills:shaping")`. In Codex, select the installed skill or
+request it by name. No global hook runs this entire workflow.
+
+| Skill | Use |
+| --- | --- |
+| `setup-mascah-skills` | Optionally record paths, tracker and execution preferences |
+| `shaping` | Clarify intent, alternatives and acceptance |
+| `domain-modeling` | Resolve terminology and consequential decisions |
+| `to-spec` | Save agreed intent locally |
+| `implement` | Deliver a direct task, issue, spec or slice |
+| `tdd` | Meaningful tests through observable interfaces |
+| `code-review` | Review changes against scope and conventions |
+| `codebase-design` | Design cohesive modules and useful interfaces |
+
+A clear bug can go straight to `implement` with its supplied issue body.
+A feature can use `shaping` → `to-spec` → `implement` without tracker access.
+A spec keeps execution in Delivery; extract a linked plan only when independent
+maintenance warrants it. Setup writes one compact workflow file and preserves
+unrelated agent instructions on rerun. Existing project paths win.
+
+The shared [routes](references/workflow.md), [artifact owners](references/artifacts.md)
+and [execution contract](references/execution.md) explain persistence, authority,
+verification and direct/delegated handoffs. [The refactor spec](docs/work/mascah-skills-refactor/spec.md)
+records the agreed design; current files and checks establish what has shipped.
+[Attribution](ATTRIBUTION.md) identifies adapted sources.
+
+## Develop and release
+
+Python 3.12+ with its standard library is sufficient:
+
+```sh
+python3 scripts/validate.py
+python3 -m unittest discover -s tests -v
+python3 __init__.py
+git diff --check
+```
+
+Structural tests include a clean copied distribution and deliberately broken
+fixtures. Run [behavior exercises](tests/scenarios.md) in fresh contexts when
+skill instructions change; record observed results and limits in
+[the verification record](tests/results.md). Structural validation does not
+prove agent behavior, live tracker access or Hermes delegation.
+
+Write on an isolated branch/worktree and use Conventional Commits. CI and
+lefthook run structural/test/registration checks. Release Please opens the
+release PR after integration to main; its simple release updates `version.txt`,
+the release manifest and Claude/Codex/Hermes version fields. Review that PR
+before releasing. This implementation does not publish or tag a release.

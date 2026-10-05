@@ -7,11 +7,16 @@
   "description": "Mike Ascah's plugins for coding agents.",
   "plugins": [
     {
-      "name": "grove",
+      "name": "mascah-skills",
       "source": "./",
-      "description": "Repo-local project knowledge for coding agents: shape work, get scoped context, implement, close, curate.",
+      "description": "Personal engineering skills: discover, shape, specify and implement with proportionate verification.",
       "category": "engineering",
-      "keywords": ["knowledge", "planning", "workflow", "skills"]
+      "keywords": [
+        "knowledge",
+        "planning",
+        "workflow",
+        "skills"
+      ]
     }
   ]
 }

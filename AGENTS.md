@@ -1,10 +1,10 @@
 # mascah-skills
 
-This repository is being refactored from Grove into a personal skill suite. The agreed design and all four delivery stages live in [the refactor specification](docs/work/mascah-skills-refactor/spec.md). Stage 2 is the first usable checkpoint; all four stages are in scope.
+This repository ships a personal engineering skill suite. The agreed design and all four delivery stages live in [the refactor specification](docs/work/mascah-skills-refactor/spec.md); current files and [verification results](tests/results.md) establish delivered behavior. The independent skills share [workflow](references/workflow.md), [artifact ownership](references/artifacts.md), and [execution](references/execution.md) contracts.
 
 ## Working here
 
-- The Grove workflow is retired for this refactor. Do not create Grove work records or run its status, claim, lint, close, or delivery commands. Existing Grove files are legacy material scheduled for removal, not instructions for new work. Read them directly when needed for migration.
+- The Grove workflow is retired. Do not create Grove work records or run its lifecycle commands. Historical material remains in git; no Grove installation is required.
 - Use an isolated worktree branch for writes; do not commit to main. Preserve other sessions' changes and worktrees.
 - Use Conventional Commits. Work IDs and tracker references are optional and must correspond to real work; do not manufacture tracking records to satisfy a commit convention.
 - Keep requirements in their owning document. Use Delivery inside a spec by default; extract a plan only when independent reading or maintenance warrants it, replacing the inline detail with a link.

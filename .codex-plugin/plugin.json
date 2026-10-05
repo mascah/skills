@@ -1,19 +1,20 @@
 {
-  "name": "grove",
+  "name": "mascah-skills",
   "version": "0.3.0",
-  "description": "Repo-local project knowledge for coding agents: shape work, get scoped context, implement, close, curate.",
+  "description": "Personal engineering skills: discover, shape, specify and implement with proportionate verification.",
   "author": {
     "name": "Mike Ascah"
   },
   "skills": "./skills/",
   "interface": {
-    "displayName": "Grove",
-    "shortDescription": "Repo-local project knowledge for coding agents",
+    "displayName": "mascah-skills",
+    "shortDescription": "Personal engineering skills",
     "developerName": "Mike Ascah",
     "category": "Developer Tools",
-    "longDescription": "Maintain repo-local project knowledge, select and combine work, prepare implementation plans, and reconcile verified results.",
+    "longDescription": "Personal engineering skills: discover, shape, specify and implement with proportionate verification.",
     "defaultPrompt": [
-      "Use Grove to identify the next useful work and prepare an implementation within the project outcomes and constraints."
+      "Shape this idea into a useful change.",
+      "Implement the selected request or local specification."
     ],
     "capabilities": [
       "Interactive",

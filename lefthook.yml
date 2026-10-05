@@ -2,9 +2,9 @@ pre-commit:
   parallel: true
   commands:
     tests:
-      run: uv run --project cli --extra dev pytest -q cli/tests
-    lint:
-      run: uv run --project cli grove lint
+      run: python3 -m unittest discover -s tests -v
+    structure:
+      run: python3 scripts/validate.py
     hermes:
       run: python3 __init__.py
 
@@ -13,4 +13,4 @@ commit-msg:
     conventional:
       run: >-
         head -1 {1} | grep -qE '^((feat|fix|docs|style|refactor|perf|test|build|ci|chore|revert)(\(.+\))?!?: .+|Merge |Revert )'
-        || { echo 'commit message must be conventional, e.g. "feat(cli): add flag"'; exit 1; }
+        || { echo 'commit message must be conventional, e.g. "feat(skills): add research"'; exit 1; }

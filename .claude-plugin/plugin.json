@@ -1,7 +1,7 @@
 {
-  "name": "grove",
+  "name": "mascah-skills",
   "version": "0.3.0",
-  "description": "Repo-local project knowledge for coding agents: shape work, get scoped context, implement, close, curate.",
+  "description": "Personal engineering skills: discover, shape, specify and implement with proportionate verification.",
   "author": {
     "name": "Mike Ascah",
     "url": "https://github.com/mascah"
@@ -10,7 +10,7 @@
   "repository": "https://github.com/mascah/skills",
   "license": "MIT",
   "keywords": [
-    "knowledge",
+    "engineering",
     "planning",
     "workflow",
     "skills"

@@ -2,7 +2,7 @@
   "name": "mascah",
   "plugins": [
     {
-      "name": "grove",
+      "name": "mascah-skills",
       "source": {
         "source": "local",
         "path": "./"

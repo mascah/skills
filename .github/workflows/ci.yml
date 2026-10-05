@@ -8,7 +8,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: astral-sh/setup-uv@v6
-      - run: uv run --project cli --extra dev pytest -q cli/tests
-      - run: uv run --project cli grove lint
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python3 scripts/validate.py
+      - run: python3 -m unittest discover -s tests -v
       - run: python3 __init__.py
