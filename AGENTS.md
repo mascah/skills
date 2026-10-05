@@ -1,12 +1,14 @@
-<!-- grove:begin -->
-## Grove
-Project knowledge lives in `docs/grove/`. Do not read that tree directly; use the CLI.
-- Start every session with `grove status`.
-- Before touching a work unit run `grove context --work <id>` (add `--phase shape|plan|debug|debrief` when not implementing).
-- For one implementation spanning several units, run `grove batch <ids>` and prepare a shared plan.
-- After writing any knowledge page run `grove lint`.
-- Every session that writes, shaping and curation included, works on its own worktree branch and never commits to main; a non-work session with no work ID yet is named for its skill and topic (`worktree-<skill>-<slug>`); each session ends by saying how to merge.
-- Claim work before changing it (`grove claim <ids>`) and run `grove verify-delivery` before handing a branch to the human.
-- Finish implementation with the `grove:close` skill, which ends in `grove close <id>`.
-- Give every commit a Conventional Commits subject (`type(scope): summary`, `docs` for knowledge-only changes, `docs: close <id>` for the close) and put the work ID in a `Refs: <id>` footer, never in the subject.
-<!-- grove:end -->
+# mascah-skills
+
+This repository is being refactored from Grove into a personal skill suite. The agreed design and all four delivery stages live in [the refactor specification](docs/work/mascah-skills-refactor/spec.md). Stage 2 is the first usable checkpoint; all four stages are in scope.
+
+## Working here
+
+- The Grove workflow is retired for this refactor. Do not create Grove work records or run its status, claim, lint, close, or delivery commands. Existing Grove files are legacy material scheduled for removal, not instructions for new work. Read them directly when needed for migration.
+- Use an isolated worktree branch for writes; do not commit to main. Preserve other sessions' changes and worktrees.
+- Use Conventional Commits. Work IDs and tracker references are optional and must correspond to real work; do not manufacture tracking records to satisfy a commit convention.
+- Keep requirements in their owning document. Use Delivery inside a spec by default; extract a plan only when independent reading or maintenance warrants it, replacing the inline detail with a link.
+- Preserve useful behavior and rationale while removing obsolete machinery. The spec describes intended changes, not proof of implemented behavior.
+- Validate changes with checks appropriate to their substance. Documentation changes need document and diff checks; skill behavior needs representative execution scenarios, not only text validation. Report checks actually run and any unexercised runtime integrations.
+- Upstream skill repositories, installed plugins, Hermes configuration, and external trackers are reference or integration surfaces; changing this repository does not authorize writes to those surfaces.
+- End a writing session with the branch, what changed, verification results, and how to merge or resume it.
