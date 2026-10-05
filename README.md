@@ -3,8 +3,8 @@
 A personal engineering skill suite for hobby projects. Shape useful changes,
 keep durable intent in git, and implement with meaningful verification. Skills
 are independently invocable; setup, specs, plans, tickets and delegation are
-optional when the work does not need them. No Grove CLI or upstream plugin is
-required.
+optional when the work does not need them. Each skill works independently of
+upstream plugins.
 
 ## Install
 
@@ -46,37 +46,6 @@ Installation guidance follows [Claude's plugin docs](https://code.claude.com/doc
 and [Hermes's plugin docs](https://hermes-agent.nousresearch.com/docs/user-guide/features/plugins).
 Claude/Codex syntax was also checked against local CLI help on 2026-10-05.
 Personal installation is separate from repository validation.
-
-## Update or migrate from Grove
-
-Refresh the marketplace and reinstall under the new identity. Existing Grove
-project files are user-owned migration inputs: inspect them and preserve useful
-intent in the project's normal docs; this plugin does not delete them.
-
-Claude Code (use the scope of the previous installation):
-
-```sh
-claude plugin uninstall grove@mascah --scope project
-claude plugin marketplace update mascah
-claude plugin install mascah-skills@mascah --scope project
-```
-
-For subsequent updates use `claude plugin update mascah-skills@mascah`.
-Codex:
-
-```sh
-codex plugin remove grove@mascah
-codex plugin marketplace upgrade mascah
-codex plugin add mascah-skills@mascah
-```
-
-For subsequent Codex refreshes, upgrade the marketplace and remove/add
-`mascah-skills@mascah` to reinstall its cached package. Hermes users disable the
-old plugin with `hermes plugins disable grove`, remove only their old Grove
-plugin link/install after inspection, and enable the new checkout link. Pulling
-updates into that checkout updates its files. Start a new harness session after
-updating. An old editable Grove CLI installation is independent and can be
-uninstalled separately if no project needs it.
 
 ## Use
 
@@ -120,8 +89,7 @@ does not automatically refactor a project.
 [The canonical workflow guide](references/workflow.md) explains the complete
 system and links to each single maintained rule/procedure owner. Skills carry
 only relevant focused references, with conditional loading for tracker/delegation
-work; the guide itself is not copied into their installations. [The refactor spec](docs/work/mascah-skills-refactor/spec.md)
-records the agreed design; current files and checks establish what has shipped.
+work; the guide itself is not copied into their installations.
 [Attribution](ATTRIBUTION.md) identifies adapted sources.
 
 ## Develop and release
@@ -161,9 +129,8 @@ Configuration lives in `.github/release-please-config.json`; package/updater pat
 still resolve from the repository root. Review that PR
 before releasing. This implementation does not publish or tag a release.
 
-The personal suite version baseline is 0.1.0. The existing changelog records older
-Grove releases. For this reset, `last-release-sha` in the Release Please config
-anchors commit collection at the last integrated suite revision. Remove that
+The personal suite version baseline is 0.1.0. For this reset, `last-release-sha`
+in the Release Please config anchors commit collection at the last integrated suite revision. Remove that
 temporary field after the first successful new release PR is merged, restoring
 automatic release-boundary discovery. Old remote tags/releases are not removed by
 changing version files or force-pushing a branch. See the
