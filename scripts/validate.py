@@ -83,6 +83,9 @@ def validate(root):
             fail(f"{name}: retired Grove runtime instruction")
         if re.search(r"\b(?:grill-with-docs|wayfinder|superpowers:|setup-matt-pocock-skills)\b", text):
             fail(f"{name}: retired or upstream skill dependency")
+        for invoked in re.findall(r"\b(?:use|invoke)\s+`([a-z][a-z0-9-]*)`", text, re.I):
+            if invoked not in names:
+                fail(f"{name}: missing skill invocation: {invoked}")
 
     # Validate local Markdown links across distribution docs, including anchors.
     for path in root.rglob("*.md"):
@@ -116,6 +119,8 @@ def validate(root):
         manifests = [load(".claude-plugin/plugin.json"), load(".codex-plugin/plugin.json"),
                      scalars((root / "plugin.yaml").read_text())]
         for manifest in manifests:
+            if not isinstance(manifest, dict):
+                raise ValueError("plugin manifest must be an object")
             if manifest.get("name") != "mascah-skills":
                 fail("plugin identity must be mascah-skills")
             if manifest.get("version") != version:
@@ -124,6 +129,8 @@ def validate(root):
             fail("Codex skills discovery must use ./skills/")
         for file in (".claude-plugin/marketplace.json", ".agents/plugins/marketplace.json"):
             marketplace = load(file)
+            if not isinstance(marketplace, dict):
+                raise ValueError(f"{file}: marketplace must be an object")
             if marketplace.get("name") != "mascah" or len(marketplace.get("plugins", [])) != 1:
                 fail(f"{file}: expected mascah marketplace and one plugin")
             entry = marketplace["plugins"][0]
@@ -142,9 +149,13 @@ def validate(root):
             seen_targets.add(target)
             if not (root / target).is_file():
                 fail(f"missing release target: {target}")
+            if target in version_targets:
+                expected_type = "yaml" if target == "plugin.yaml" else "json"
+                if not isinstance(entry, dict) or entry.get("type") != expected_type or entry.get("jsonpath") != "$.version":
+                    fail(f"invalid release updater: {target} must update $.version as {expected_type}")
         if not version_targets.issubset(seen_targets):
             fail("release version targets incomplete")
-    except (OSError, ValueError, KeyError, TypeError, IndexError) as exc:
+    except (OSError, ValueError, KeyError, TypeError, IndexError, AttributeError) as exc:
         fail(f"manifest metadata: {exc}")
 
     try:

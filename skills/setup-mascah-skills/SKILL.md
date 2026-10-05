@@ -22,6 +22,9 @@ and [writing discipline](../../references/execution.md).
    Without a selected tracker, retain local-only operation. Use familiar triage
    roles or existing equivalents when applicable: `needs-triage`, `needs-info`,
    `ready-for-agent`, `ready-for-human`, `wontfix`.
+   For GitHub, record the explicit repository and the role-to-label mapping,
+   following [the tracker contract](../../references/github.md). Setup records
+   preferences; it does not create labels or change readiness remotely.
 4. Make the workflow discoverable from instructions used by the project's
    harnesses. Preserve unrelated AGENTS/CLAUDE content. If CLAUDE already delegates
    to AGENTS, one pointer in AGENTS is enough; otherwise add a small pointer where

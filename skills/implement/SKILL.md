@@ -10,6 +10,14 @@ Read [execution and handoff](../../references/execution.md) and
 workflow configuration. Accept a direct request, complete issue body, local
 spec, or named slice; small work needs no spec, tickets, separate plan or setup.
 
+For tracker inputs read [GitHub scope and readiness](../../references/github.md).
+Fetch body/discussion and resolve the canonical pointer at its identified
+revision, or use complete supplied issue-only content. Recheck integrated
+prerequisites, assignment ownership and parent/child overlap before starting.
+If issue-only content cannot be fetched, request that exact missing content;
+git cannot recover it. External status changes follow caller policy and
+distinguish implementation completion from merge/integration.
+
 1. Identify scope, constraints and observable acceptance. Inspect the checkout,
    relevant code and decisions. Read Delivery if present. Resolve scope/revision
    and prerequisites before dependent execution; report specific unavailable
@@ -30,5 +38,5 @@ spec, or named slice; small work needs no spec, tickets, separate plan or setup.
 
 Follow the caller's worker/executor role. Direct execution is supported without
 delegation tools; no recursive controller or external CLI is required. For a
-whole specified outcome use `implement-spec` when available, preserving this
+whole specified outcome use [implement-spec](../implement-spec/SKILL.md), preserving this
 same unit-level completion contract.

@@ -5,6 +5,8 @@ SKILLS = Path(__file__).resolve().parent / "skills"
 EXPECTED_SKILLS = {
     "setup-mascah-skills", "shaping", "domain-modeling", "to-spec",
     "implement", "tdd", "code-review", "codebase-design",
+    "to-tickets", "triage", "implement-spec",
+    "discovery", "improve-codebase-architecture", "research", "prototype",
 }
 
 

@@ -171,6 +171,11 @@ Skills can be invoked independently. Supporting references are loaded when relev
 
 ## Delivery
 
+Implementation evidence and runtime limits are recorded in
+[the verification record](../../../tests/results.md). This specification remains
+the intended contract; that record distinguishes exercised behavior from
+unexercised integrations.
+
 Execution: sequential integration checkpoints, with focused delegation permitted by the executing harness and task ownership. Reason: shared conventions and packaging precede dependent skills. Runtime: interactive implementation by default; an external caller can delegate under the contract above. Reassess parallelism after common references and entry-point names stabilize.
 
 All four stages are part of this effort. Stage 2 must be installable and usable on its own; do not defer essential support dependencies until stage 4. The stages are deliverables, not mandatory GitHub issues. Use one implementation branch unless actual independent ownership justifies additional branches.

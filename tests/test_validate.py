@@ -75,6 +75,20 @@ class DistributionValidation(unittest.TestCase):
                        d["packages"]["."]["extra-files"].append("cli/grove/__init__.py"))
         self.assert_rejected("release target")
 
+    def test_release_updater_must_target_version_field(self):
+        self.edit_json("release-please-config.json", lambda d:
+                       d["packages"]["."]["extra-files"][0].update(jsonpath="$.absent"))
+        self.assert_rejected("release updater")
+
+    def test_explicit_missing_skill_invocation_rejected(self):
+        path = self.root / "skills/implement/SKILL.md"
+        path.write_text(path.read_text() + "\nInvoke `missing-helper` before delivery.\n")
+        self.assert_rejected("missing skill invocation")
+
+    def test_malformed_manifest_shape_reports_structured_error(self):
+        (self.root / ".claude-plugin/plugin.json").write_text("[]")
+        self.assert_rejected("ERROR: manifest metadata")
+
     def test_hermes_inventory_drift_rejected(self):
         path = self.root / "__init__.py"
         path.write_text(path.read_text().replace('"tdd",', '"absent-helper",'))

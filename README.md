@@ -88,12 +88,27 @@ request it by name. No global hook runs this entire workflow.
 | `tdd` | Meaningful tests through observable interfaces |
 | `code-review` | Review changes against scope and conventions |
 | `codebase-design` | Design cohesive modules and useful interfaces |
+| `to-tickets` | Draft or publish selected Delivery slice assignments |
+| `triage` | Investigate requests and check actionable readiness |
+| `implement-spec` | Deliver and integrate whole-spec acceptance |
+| `discovery` | Investigate ideas, with continue/defer/abandon/answer outcomes |
+| `improve-codebase-architecture` | Investigate real architectural friction |
+| `research` | Gather primary evidence for a bounded question |
+| `prototype` | Run clearly disposable design experiments |
 
 A clear bug can go straight to `implement` with its supplied issue body.
-A feature can use `shaping` → `to-spec` → `implement` without tracker access.
+A feature can use `shaping` → `to-spec` → `implement-spec` without tracker access.
+For independent assignment, `to-tickets` creates concise scope pointers and
+`triage` checks readiness. Ticket creation does not apply `ready-for-agent`;
+closed/rejected blockers and unmerged work do not establish prerequisites.
 A spec keeps execution in Delivery; extract a linked plan only when independent
 maintenance warrants it. Setup writes one compact workflow file and preserves
 unrelated agent instructions on rerun. Existing project paths win.
+
+An uncertain idea can go through `discovery`, use `research` or `prototype`,
+and stop with evidence that it should be abandoned. Architecture investigation
+compares observed costs and routes selected improvements into `shaping`; it
+does not automatically refactor a project.
 
 The shared [routes](references/workflow.md), [artifact owners](references/artifacts.md)
 and [execution contract](references/execution.md) explain persistence, authority,
