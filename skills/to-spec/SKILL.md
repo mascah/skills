@@ -5,8 +5,8 @@ description: Use when saving settled conversation or design intent as a local sp
 
 # Save the agreed intent
 
-Read [artifact ownership](../../references/artifacts.md),
-[mandate](../../references/workflow.md), and [execution](../../references/execution.md).
+Read [artifact ownership](references/artifacts.md),
+[mandate](references/workflow.md), and [execution](references/execution.md).
 Synthesize known intent from the conversation, existing docs and relevant code.
 Use project language and respect prior decisions. Setup and tracker access are
 unnecessary. Do not start a second mandatory interview; ask only about a

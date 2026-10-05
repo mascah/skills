@@ -5,7 +5,7 @@ description: Use when reviewing a branch, PR, or working diff for requirement ga
 
 # Review the actual change
 
-Read [execution and evidence](../../references/execution.md). Resolve the review
+Read [execution and evidence](references/execution.md). Resolve the review
 base from the caller or known branch baseline; state it. Include relevant staged
 and unstaged changes when reviewing work in progress. Check that refs resolve
 and inspect the complete selected diff and relevant surrounding code. An empty
@@ -20,7 +20,7 @@ Check both intended behavior and conventions against the files. Look for
 defects, missing acceptance, regression sensitivity, failure/recovery sequences,
 ordering/migration risks, stale documents and integration assumptions. Evaluate
 costly abstractions against actual caller needs with
-[codebase-design](../codebase-design/SKILL.md) when useful. Distinguish a real
+`codebase-design` when useful. Distinguish a real
 defect from a preference and from an unexercised runtime boundary.
 
 Use direct review or focused independent review under caller policy; no fixed
@@ -30,3 +30,5 @@ List checks actually run, requirements coverage and unavailable validation.
 For no material findings, say that with the review scope and residual limits.
 Review alone does not authorize unrelated fixes, merge or publication; within
 an implementation mandate, fix material findings and recheck affected behavior.
+
+The `codebase-design` helper is optional. Without it, evaluate whether interfaces hide useful complexity, related changes stay together, and tests observe public behavior; avoid speculative abstractions.

@@ -46,9 +46,9 @@ class DistributionValidation(unittest.TestCase):
         (self.root / "references/execution.md").unlink()
         self.assert_rejected("references/execution.md")
 
-    def test_missing_helper_skill_rejected(self):
+    def test_plugin_inventory_requires_all_published_skills(self):
         shutil.rmtree(self.root / "skills/tdd")
-        self.assert_rejected("tdd")
+        self.assert_rejected("Hermes")
 
     def test_frontmatter_name_must_match_directory(self):
         path = self.root / "skills/shaping/SKILL.md"
@@ -96,7 +96,7 @@ class DistributionValidation(unittest.TestCase):
 
     def test_broken_anchor_rejected(self):
         path = self.root / "skills/shaping/SKILL.md"
-        path.write_text(path.read_text() + "\n[missing](../../references/workflow.md#absent)\n")
+        path.write_text(path.read_text() + "\n[missing](references/workflow.md#absent)\n")
         self.assert_rejected("anchor")
 
     def test_escape_from_package_rejected(self):

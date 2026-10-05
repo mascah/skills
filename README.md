@@ -8,8 +8,15 @@ required.
 
 ## Install
 
-Install the whole plugin so shared `references/` ships with `skills/`. Copying
-one skill directory alone loses its supporting contracts.
+Each published skill folder contains its supporting references and works alone.
+Install selected skills with [the skills CLI](https://github.com/vercel-labs/skills):
+
+```sh
+npx skills add mascah/skills --skill implement --agent codex
+```
+
+Or install the full plugin through a supported harness below. Helper skills are
+optional; each entry point includes guidance for operating without them.
 
 Claude Code:
 
@@ -127,8 +134,17 @@ python3 __init__.py
 git diff --check
 ```
 
-Structural tests include a clean copied distribution and deliberately broken
-fixtures. Run [behavior exercises](tests/scenarios.md) in fresh contexts when
+Edit shared guidance only in root `references/`, then run
+`python3 scripts/bundle_references.py` and commit its generated copies under
+`skills/<name>/references/` together with the source. Those directories are
+generated-only; skill-specific authored support can live elsewhere inside its
+skill folder. The helper follows local links and bundles only required files.
+It is development tooling; users and installers need no build step.
+
+Validation rejects copy drift and links escaping an individual skill. To check
+one installed folder, run `python3 scripts/validate.py --skill /path/to/skill`.
+Structural tests include every skill copied alone, a clean plugin distribution
+and deliberately broken fixtures. Run [behavior exercises](tests/scenarios.md) in fresh contexts when
 skill instructions change; record observed results and limits in
 [the verification record](tests/results.md). Structural validation does not
 prove agent behavior, live tracker access or Hermes delegation.

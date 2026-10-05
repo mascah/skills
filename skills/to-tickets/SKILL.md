@@ -5,10 +5,10 @@ description: Use when independently assignable deliverables from a spec or agree
 
 # Assign useful deliverables
 
-Read [artifact ownership](../../references/artifacts.md),
-[GitHub contract](../../references/github.md), and
-[mandate](../../references/workflow.md). Read
-[execution](../../references/execution.md) for local writes. Use the canonical
+Read [artifact ownership](references/artifacts.md),
+[GitHub contract](references/github.md), and
+[mandate](references/workflow.md). Read
+[execution](references/execution.md) for local writes. Use the canonical
 spec and Delivery; setup and tickets are not prerequisites for implementation.
 
 Reuse named slices and real structural dependencies. Introduce slices only
@@ -31,7 +31,9 @@ When publishing, inspect existing tickets to avoid duplicates, create before
 wiring native dependencies, and report partial failures accurately.
 
 Creating tickets does not apply `ready-for-agent`. Use
-[triage](../triage/SKILL.md) to check readiness and parent/child dispatch ownership.
+`triage` to check readiness and parent/child dispatch ownership.
 Do not modify unrelated parents. Return the canonical slice mapping, structural
 edges, draft or real ticket links, operations actually performed and unavailable
 inputs; ordinary tracker progress requires no local document changes.
+
+The `triage` helper is optional. Without it, apply the readiness checklist in the bundled GitHub reference directly; do not dispatch overlapping parent/child assignments.

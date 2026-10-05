@@ -6,8 +6,8 @@ description: Use when configuring or updating a project's paths, tracker labels,
 # Adopt the project
 
 Setup is optional. Discover existing conventions before choosing defaults. Read
-[workflow](../../references/workflow.md), [artifact ownership](../../references/artifacts.md),
-and [writing discipline](../../references/execution.md).
+[workflow](references/workflow.md), [artifact ownership](references/artifacts.md),
+and [writing discipline](references/execution.md).
 
 1. Inspect agent instructions, documentation locations, glossary/context maps,
    ADRs, git remotes and project check commands. Read any existing workflow file.
@@ -23,7 +23,7 @@ and [writing discipline](../../references/execution.md).
    roles or existing equivalents when applicable: `needs-triage`, `needs-info`,
    `ready-for-agent`, `ready-for-human`, `wontfix`.
    For GitHub, record the explicit repository and the role-to-label mapping,
-   following [the tracker contract](../../references/github.md). Setup records
+   following [the tracker contract](references/github.md). Setup records
    preferences; it does not create labels or change readiness remotely.
 4. Make the workflow discoverable from instructions used by the project's
    harnesses. Preserve unrelated AGENTS/CLAUDE content. If CLAUDE already delegates

@@ -6,8 +6,8 @@ description: Use when designing an interface, improving testability, or evaluati
 # Design for callers and maintainers
 
 Read relevant project language, decisions and changing code. Use
-[artifact ownership](../../references/artifacts.md) and
-[execution](../../references/execution.md) for writes. Prefer the project's
+[artifact ownership](references/artifacts.md) and
+[execution](references/execution.md) for writes. Prefer the project's
 vocabulary; these supporting terms explain design rather than replacing it:
 
 | Term | Meaning |

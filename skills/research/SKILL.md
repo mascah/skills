@@ -5,9 +5,9 @@ description: Use when investigating a bounded question that needs source evidenc
 
 # Gather evidence for a decision
 
-Read [routes and mandate](../../references/workflow.md) and
-[artifact ownership](../../references/artifacts.md). Read
-[execution](../../references/execution.md) before writing. Identify the question,
+Read [routes and mandate](references/workflow.md) and
+[artifact ownership](references/artifacts.md). Read
+[execution](references/execution.md) before writing. Identify the question,
 why its answer matters, constraints and what would change the next useful action.
 Reuse relevant local findings and prior decisions, verifying them against current
 sources instead of repeating settled research or trusting stale conclusions.
@@ -27,6 +27,6 @@ or report the precise input needed to proceed. Do not invent certainty to finish
 Return findings, source-backed recommendation, limits and next useful action.
 Persist only when future use warrants it, at the project's existing research
 location or in the effort's discovery notes. Move settled intent/decisions to
-their [canonical owner](../../references/artifacts.md) and link rather than
+their [canonical owner](references/artifacts.md) and link rather than
 maintaining duplicates. Research may answer, defer or contradict an idea; it
 does not automatically create tickets, authorize implementation or publish.

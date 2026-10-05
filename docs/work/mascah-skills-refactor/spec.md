@@ -135,7 +135,9 @@ Hermes-specific operational instructions should live with Hermes. A standing pre
 
 ## Skill inventory and shared references
 
-Keep the flat `skills/<name>/SKILL.md` structure, which the current Hermes registration already scans. Use supporting files inside a skill when specific to it and a small shared `references/` directory for cross-skill contracts. Plugin installations must ship those references; isolated-install checks must detect broken paths.
+Keep the flat `skills/<name>/SKILL.md` structure, which the current Hermes registration already scans. Use supporting files inside a skill when specific to it and a small shared `references/` directory for cross-skill contracts. The portability follow-up now bundles generated copies inside each skill; see
+[standalone distribution](../portable-skills/spec.md). Isolated-install checks
+must validate individual folders, not only the complete plugin.
 
 | Skill | Responsibility | Available by |
 | --- | --- | --- |

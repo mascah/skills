@@ -1,10 +1,12 @@
 """Read-only checks for the shipped skill distribution; Python stdlib only."""
 import json
+import argparse
 from pathlib import Path
 import re
 import runpy
 import sys
 from urllib.parse import unquote, urlsplit
+from bundle_references import drift
 
 
 def scalars(text):
@@ -47,7 +49,7 @@ def headings(text):
     return anchors
 
 
-def validate(root):
+def validate(root, standalone=False):
     errors = []
 
     def fail(message):
@@ -56,15 +58,18 @@ def validate(root):
     def load(path):
         return json.loads((root / path).read_text())
 
-    skill_files = sorted((root / "skills").glob("*/SKILL.md"))
+    skill_files = [root / "SKILL.md"] if standalone else sorted((root / "skills").glob("*/SKILL.md"))
     names = {p.parent.name for p in skill_files}
     if not names:
         fail("no skills discovered")
-    for directory in (root / "skills").iterdir():
+    for directory in (() if standalone else (root / "skills").iterdir()):
         if directory.is_dir() and not (directory / "SKILL.md").is_file():
             fail(f"missing entry point: {directory.name}/SKILL.md")
     for path in skill_files:
         name = path.parent.name
+        for bundled in path.parent.rglob('*'):
+            if bundled.is_symlink() and not bundled.resolve().is_relative_to(path.parent.resolve()):
+                fail(f'{name}: symlink outside skill: {bundled.name}')
         text = path.read_text()
         match = re.match(r"\A---\n(.*?)\n---\n(.+)", text, re.S)
         try:
@@ -84,7 +89,7 @@ def validate(root):
         if re.search(r"\b(?:grill-with-docs|wayfinder|superpowers:|setup-matt-pocock-skills)\b", text):
             fail(f"{name}: retired or upstream skill dependency")
         for invoked in re.findall(r"\b(?:use|invoke)\s+`([a-z][a-z0-9-]*)`", text, re.I):
-            if invoked not in names:
+            if not standalone and invoked not in names:
                 fail(f"{name}: missing skill invocation: {invoked}")
 
     # Validate local Markdown links across distribution docs, including anchors.
@@ -104,13 +109,23 @@ def validate(root):
             if url.scheme in {"https", "http", "mailto"}:
                 continue
             resolved = (path.parent / unquote(url.path)).resolve() if url.path else path
-            if url.scheme or not resolved.is_relative_to(root):
-                fail(f"{path.relative_to(root)}: link outside package: {target}")
+            boundary = root
+            if not standalone and path.is_relative_to(root / 'skills'):
+                boundary = root / 'skills' / path.relative_to(root / 'skills').parts[0]
+            if url.scheme or not resolved.is_relative_to(boundary):
+                fail(f"{path.relative_to(root)}: link outside skill or outside package: {target}")
             elif not resolved.exists():
                 fail(f"{path.relative_to(root)}: missing link: {target}")
             elif url.fragment and resolved.is_file() and resolved.suffix == ".md":
                 if unquote(url.fragment) not in headings(resolved.read_text()):
                     fail(f"{path.relative_to(root)}: missing anchor: {target}")
+
+    if standalone:
+        return errors, names
+    try:
+        errors.extend(drift(root))
+    except (OSError, ValueError) as exc:
+        fail(f'reference drift: {exc}')
 
     try:
         version = (root / "version.txt").read_text().strip()
@@ -183,12 +198,16 @@ def validate(root):
 
 
 if __name__ == "__main__":
-    package = Path(sys.argv[1]).resolve() if len(sys.argv) == 2 else Path(__file__).resolve().parents[1]
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('package', nargs='?', type=Path)
+    parser.add_argument('--skill', type=Path, help='Validate one isolated skill folder')
+    args = parser.parse_args()
+    package = (args.skill or args.package or Path(__file__).resolve().parents[1]).resolve()
     try:
-        problems, skills = validate(package)
+        problems, skills = validate(package, standalone=args.skill is not None)
     except (OSError, ValueError) as exc:
         problems, skills = [str(exc)], set()
     for problem in problems:
         print(f"ERROR: {problem}")
-    print(f"{len(skills)} skills; {len(problems)} errors")
+    print(f"{len(skills)} {'skill' if args.skill else 'skills'}; {len(problems)} errors")
     raise SystemExit(bool(problems))

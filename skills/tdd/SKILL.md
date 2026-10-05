@@ -6,10 +6,10 @@ description: Use when implementing behavioral changes test-first, reproducing bu
 # Test behavior first
 
 Read project check conventions, vocabulary and relevant acceptance. Apply
-[verification obligations](../../references/execution.md). Select the highest
+[verification obligations](references/execution.md). Select the highest
 useful observable interface that catches the behavior; adopt existing test
 patterns. Routine seam choices need no additional approval when scope is clear.
-For unresolved interface design, consult [codebase-design](../codebase-design/SKILL.md).
+For unresolved interface design, consult `codebase-design`.
 
 Work in small vertical cycles:
 
@@ -36,3 +36,5 @@ Documentation and mechanical configuration use proportionate checks. If code
 was written before the test, report tests-after honestly; do not invent a red
 run. When claiming a test-first cycle, demonstrate the meaningful failure and
 subsequent pass. Never discard useful authorized work merely to reenact a ritual.
+
+The `codebase-design` helper is optional. Without it, select an interface from real caller behavior, compare error/invariant obligations and keep tests at the highest useful observable boundary.

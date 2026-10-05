@@ -148,3 +148,54 @@ and actual Release Please service execution were not exercised. Repository
 implementation does not edit those surfaces, merge main, publish or tag a release.
 Representative fresh-context fixture checks establish observed behavior only;
 they cannot guarantee every future agent interpretation.
+
+## Standalone portability correction
+
+Follow-up branch: fix/portable-skills, baseline 8e4111b, 2026-10-05.
+The original whole-plugin checks were insufficient for individual installation:
+copying each skill alone exposed 50 missing links across all fifteen skills.
+This supersedes any earlier implication that whole-plugin portability also
+established individual skill portability.
+
+The correction maintains canonical guidance in root references/ and commits
+only the support each skill needs under its local generated references/.
+Sibling filesystem links are removed; named helpers are optional with fallback
+instructions. Workflow guidance is shortened and no longer pulls in unrelated
+support transitively. A development-only bundler tracks direct/transitive needs,
+updates changed copies and removes unused copies. No installer build step.
+
+Candidate checks: full validator fifteen skills/zero errors; 21 tests passed,
+including every folder copied alone, escaping links/entry-point symlinks,
+generated drift, reference-style transitive links, obsolete copy removal and
+idempotent generation. Review exposed reference-style omission and generated
+symlink write-through; failing fixtures reproduced both, then fixes passed the
+suite. Python 3.12 and 3.13 runs, Hermes inventory, Claude component validation
+and diff checks passed. Final commit contains the tested candidate.
+
+Actual `npx skills` version 1.5.18, telemetry disabled, project-only installation
+with temporary npm cache: all fifteen selected skills installed in copy mode to
+`/private/tmp/mascah-npx-portability/copy/.agents/skills/`; implement-spec alone
+installed to a second disposable Claude Code project. Despite testing a request
+without --copy, the noninteractive installer reported copy mode; no symlink-mode
+success is claimed. Every actual installed folder passed isolated validation.
+These runs used the local candidate source, not GitHub's not-yet-published branch.
+No global skill install or personal plugin configuration was changed.
+
+Fresh-context behavior evaluator read only the named installed implement or
+implement-spec entry and its local support, plus its own fixture. It could not
+read source suite, root files, helper skills, upstream plugins or personal config.
+Issue-only normalization regression failed ('A' != 'a') then all three tests
+passed. Whole local empty-state spec regressions failed then three tests passed,
+including populated/empty/populated transitions and preserved ordering/escaping.
+Actual diffs reviewed and diff checks passed; no helper/outside-file attempt,
+tracker calls or manufactured spec/plan ceremony. Parent inspected the report and
+reran both three-test suites. Raw report/logs and uncommitted fixture branches:
+`/private/tmp/mascah-standalone-0os2r5hz/`. This establishes representative isolated
+fallback behavior, not every skill interpretation or live external integration.
+
+Four canonical support sources remain maintained once. Forty required copies
+ship (about 140 KB total); unrelated support is not bundled and installers need
+no generation step. The root reference architecture in the earlier refactor
+spec is superseded by the linked portability follow-up. Existing live runtime
+limits remain: no Hermes delegation, browser integration or GitHub publication
+was exercised by this correction.

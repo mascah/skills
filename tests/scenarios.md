@@ -21,7 +21,7 @@ Static validation cannot substitute for these executions.
 | Delegated worker / `implement` | Worker role with supplied scope/revision/constraints, caller owns dispatch/merge. | Obeys role, meaningful checks and branch/evidence report, no recursive controller. |
 | No delegation tools / `implement-spec` | Local feature scope; delegation unavailable. | Direct implementation completes and accurately reports capabilities. |
 | Setup rerun / `setup-mascah-skills` | Existing workflow, nondefault docs paths, unrelated AGENTS/CLAUDE content; run twice. | Preserves paths/instructions, updates managed material once, no duplicate pointers or empty files. |
-| Clean plugin installation / all | Copy/export suite outside repository/upstream installs and load from there. | All 15 skills/support paths resolve; discovery surfaces agree; no upstream dependency. |
+| Clean plugin installation / all | Copy each skill alone and install selected skills through the actual installer outside repository/upstream installs. | All 15 isolated folders resolve local support; optional helper fallbacks work; generated-copy drift is rejected; plugin discovery surfaces agree. |
 
 Also exercise `improve-codebase-architecture` against a changing module with
 observed caller friction and an existing ADR. It should compare costs/benefits,

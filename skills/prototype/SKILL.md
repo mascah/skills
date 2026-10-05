@@ -5,9 +5,9 @@ description: Use when a disposable experiment can answer a bounded design, logic
 
 # Build an experiment that answers a question
 
-Read [mandate](../../references/workflow.md),
-[artifact ownership](../../references/artifacts.md), and
-[execution](../../references/execution.md). Establish the question, scope, limits
+Read [mandate](references/workflow.md),
+[artifact ownership](references/artifacts.md), and
+[execution](references/execution.md). Establish the question, scope, limits
 and observable evidence before building. If those are already supplied, proceed
 within them without reopening intent. Ask only when ambiguity changes the probe.
 

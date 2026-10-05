@@ -6,8 +6,8 @@ description: Use when resolving ambiguous domain language, changing a glossary, 
 # Sharpen the domain language
 
 Read the project's workflow, glossary or context map, relevant ADRs and code.
-Use [artifact ownership](../../references/artifacts.md) and
-[execution](../../references/execution.md) for writes. This discipline changes
+Use [artifact ownership](references/artifacts.md) and
+[execution](references/execution.md) for writes. This discipline changes
 the model; merely reading an existing glossary needs no separate session.
 
 Challenge overloaded terms with specific scenarios. For example, does an
