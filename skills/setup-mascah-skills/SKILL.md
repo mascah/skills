@@ -17,8 +17,9 @@ Setup is optional. Discover existing conventions and read
    mapping if applicable, project checks, isolation/commit rules and caller
    executor policy. Record only operational preferences that are actually known;
    no credentials, model routing invented by the skill, or required empty files.
-   Infer existing locations first; otherwise use docs/work/<effort>/ for work,
-   GLOSSARY.md for terms and docs/adr/ for consequential decisions, created lazily.
+   Infer existing locations first; otherwise use docs/work/<yymmdd>-<effort>/ for
+   work (folder dated at creation), GLOSSARY.md for terms and docs/adr/ for
+   consequential decisions, created lazily.
 3. Ask only when a missing preference changes behavior and cannot be inferred.
    Without a selected tracker, retain local-only operation. Use familiar triage
    roles or existing equivalents when applicable: `needs-triage`, `needs-info`,

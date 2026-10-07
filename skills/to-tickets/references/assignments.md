@@ -7,7 +7,7 @@ Substantial work has one local requirements owner. A useful issue body is:
 ```markdown
 Implement the compatibility reader for the export migration.
 
-Scope: docs/work/export-v2/spec.md; Delivery slice: compatibility-reader.
+Scope: docs/work/260901-export-v2/spec.md; Delivery slice: compatibility-reader.
 Repository: OWNER/REPO; revision: FULL_IMMUTABLE_SHA.
 Acceptance: spec.md#existing-exports-remain-readable at that revision.
 Delivery/dependencies: spec.md#delivery (or its linked plan).

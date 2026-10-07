@@ -20,6 +20,7 @@ Static validation cannot substitute for these executions.
 | Scope change in discussion / `triage`, `to-spec` | Comment changes substantive behavior; authorize local scope update and fixture pointer refresh. | Canonical owner updated; issue remains summary/pointer, no competing requirements. |
 | Delegated worker / `implement` | Worker role with supplied scope/revision/constraints, caller owns dispatch/merge. | Obeys role, meaningful checks and branch/evidence report, no recursive controller. |
 | No delegation tools / `implement-spec` | Local feature scope; delegation unavailable. | Direct implementation completes and accurately reports capabilities. |
+| New effort folder / `to-spec`, `discovery` | Fresh project without workflow preferences; save a settled spec, then persist discovery notes for the same effort. | Spec lands in `docs/work/<yymmdd>-<effort>/` dated that day; discovery joins that folder instead of creating a second one. |
 | Setup rerun / `setup-mascah-skills` | Existing workflow, nondefault docs paths, unrelated AGENTS/CLAUDE content; run twice. | Preserves paths/instructions, updates managed material once, no duplicate pointers or empty files. |
 | Clean plugin installation / all | Copy each skill alone and install selected skills through the actual installer outside repository/upstream installs. | All 15 isolated folders resolve local support; optional helper fallbacks work; generated-copy drift is rejected; plugin discovery surfaces agree. |
 

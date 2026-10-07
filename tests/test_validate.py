@@ -104,6 +104,11 @@ class DistributionValidation(unittest.TestCase):
         path.write_text(path.read_text() + "\n[outside](../../../external.md)\n")
         self.assert_rejected("outside package")
 
+    def test_undated_work_folder_default_rejected(self):
+        path = self.root / "skills/discovery/SKILL.md"
+        path.write_text(path.read_text().replace("docs/work/<yymmdd>-<effort>", "docs/work/<effort>"))
+        self.assert_rejected("undated")
+
     def test_retired_runtime_instruction_rejected(self):
         path = self.root / "skills/implement/SKILL.md"
         path.write_text(path.read_text() + "\nRun `grove status` before changes.\n")

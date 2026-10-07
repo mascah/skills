@@ -97,6 +97,8 @@ def validate(root, standalone=False):
         if any(part in {".git", ".claude", ".venv", "__pycache__"} for part in path.relative_to(root).parts):
             continue
         text = path.read_text()
+        if path.relative_to(root).parts[0] != "docs" and re.search(r"docs/work/<(?!yymmdd>-)", text):
+            fail(f"{path.relative_to(root)}: undated work folder default")
         targets = re.findall(r"\]\(([^)]+)\)", text)
         targets += re.findall(r"^\[[^\]]+\]:\s*(\S+)", text, re.M)
         for raw in targets:

@@ -1,11 +1,12 @@
 # Specification and Delivery ownership
 
-Adopt the project's spec location, otherwise docs/work/<effort>/spec.md. A spec
-owns Problem, Intended behavior, Constraints, Acceptance, Decisions and Out of
-scope as useful. Omit empty sections; concrete behavior examples beat exhaustive
-manufactured stories. Use stable descriptive acceptance anchors when slices
-need pointers. Expose consequential open questions: a draft may contain them,
-but the affected unit cannot be ready with unresolved meaning.
+Adopt the project's spec location, otherwise docs/work/<yymmdd>-<effort>/spec.md,
+dating the folder when it is created; later documents for that effort join it.
+A spec owns Problem, Intended behavior, Constraints, Acceptance, Decisions and
+Out of scope as useful. Omit empty sections; concrete behavior examples beat
+exhaustive manufactured stories. Use stable descriptive acceptance anchors when
+slices need pointers. Expose consequential open questions: a draft may contain
+them, but the affected unit cannot be ready with unresolved meaning.
 
 Delivery owns execution only: named slices linked to acceptance, structural
 prerequisites, affected areas, migration sequence, integration and handoff.

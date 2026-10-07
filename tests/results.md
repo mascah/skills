@@ -290,3 +290,19 @@ version-file resolved from the repository root. Primary Release Please action,
 manifest config and simple strategy source verified custom paths/reset options.
 No remote force-push, tag/release mutation, GitHub Action run or publication was
 performed by this task. Final commit contains this tested candidate.
+
+## Dated work folders
+
+Date: 2026-10-07. Branch `feat/dated-work-folders` on baseline `3490744`. Runtime:
+Claude Code with two fresh-context agents reading the worktree's skill files
+directly and local Python 3.13.12. No installed plugin version was invoked.
+
+| Exercise | Observed actions and result |
+| --- | --- |
+| New effort spec (`to-spec`) | Fresh fixture without workflow preferences or docs folder. Created only `docs/work/261007-restock-validation/spec.md`, citing the dated default in Specification and Delivery. No commit, tickets or implementation. |
+| Discovery notes (`discovery`) | Fixture with existing `docs/work/261005-offline-cache/spec.md`. Notes for that effort joined the existing folder; a new effort created `docs/work/261007-search-ranking/`. No other files changed. |
+
+Static checks: `python3 scripts/validate.py` reported 15 skills/zero errors and
+rejects an undated work-folder default; `python3 -m unittest discover
+-s tests` passed 22 checks; `python3 __init__.py` registered 15 skills;
+`git diff --check` passed. Fixtures lived in the session scratchpad, uncommitted.

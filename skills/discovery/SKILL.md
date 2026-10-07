@@ -18,7 +18,8 @@ assumptions with concrete examples. Honor caller execution/delegation policy;
 no fixed fan-out or one-question-per-session limit is required.
 
 Maintain persistent notes only when continuity or future reuse warrants them.
-Adopt the project location, otherwise `docs/work/<effort>/discovery.md`, holding
+Adopt the project location, otherwise `docs/work/<yymmdd>-<effort>/discovery.md`,
+dating the folder at creation and sharing it with the effort's spec, holding
 question/destination, constraints, evidence with sources, unresolved questions
 and dependencies, and disposition. Short answer-only conversations need no file.
 When facts settle, move meaning to its durable owner and keep a pointer, not a
