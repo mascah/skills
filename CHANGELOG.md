@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.2.0](https://github.com/mascah/skills/compare/v0.1.0...v0.2.0) (2026-10-07)
+
+
+### Features
+
+* **skills:** date new work folders under docs/work ([980defa](https://github.com/mascah/skills/commit/980defa1ea5243092a6988354ad208e084b9971e))
+
 ## [0.3.0](https://github.com/mascah/skills/compare/v0.2.0...v0.3.0) (2026-09-19)
 
 
