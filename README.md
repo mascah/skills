@@ -21,7 +21,7 @@ optional; each entry point includes guidance for operating without them.
 Claude Code:
 
 ```sh
-claude plugin marketplace add mascah/skills
+claude plugin marketplace add mascah/claude-plugins
 claude plugin install mascah-skills@mascah --scope project
 ```
 
