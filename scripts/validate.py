@@ -144,18 +144,20 @@ def validate(root, standalone=False):
                 fail("plugin version differs from version.txt")
         if manifests[1].get("skills") != "./skills/":
             fail("Codex skills discovery must use ./skills/")
-        for file in (".claude-plugin/marketplace.json", ".agents/plugins/marketplace.json"):
-            marketplace = load(file)
-            if not isinstance(marketplace, dict):
-                raise ValueError(f"{file}: marketplace must be an object")
-            if marketplace.get("name") != "mascah" or len(marketplace.get("plugins", [])) != 1:
-                fail(f"{file}: expected mascah marketplace and one plugin")
-            entry = marketplace["plugins"][0]
-            if entry.get("name") != "mascah-skills":
-                fail(f"{file}: expected mascah-skills entry")
-            expected = "./" if file.startswith(".claude") else {"source": "local", "path": "./"}
-            if entry.get("source") != expected:
-                fail(f"{file}: plugin source must resolve to package root")
+        # Claude Code's marketplace lives in mascah/claude-plugins; this repo keeps Codex's.
+        file = ".agents/plugins/marketplace.json"
+        marketplace = load(file)
+        if not isinstance(marketplace, dict):
+            raise ValueError(f"{file}: marketplace must be an object")
+        if marketplace.get("name") != "mascah" or len(marketplace.get("plugins", [])) != 1:
+            fail(f"{file}: expected mascah marketplace and one plugin")
+        entry = marketplace["plugins"][0]
+        if entry.get("name") != "mascah-skills":
+            fail(f"{file}: expected mascah-skills entry")
+        if entry.get("source") != {"source": "local", "path": "./"}:
+            fail(f"{file}: plugin source must resolve to package root")
+        if (root / ".claude-plugin/marketplace.json").exists():
+            fail(".claude-plugin/marketplace.json: Claude Code's marketplace lives in mascah/claude-plugins")
         if load(".github/.release-please-manifest.json").get(".") != version:
             fail("release manifest version differs from version.txt")
         extras = load(".github/release-please-config.json")["packages"]["."]["extra-files"]
